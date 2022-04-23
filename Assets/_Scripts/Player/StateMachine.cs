@@ -12,28 +12,26 @@ public class StateMachine : MonoBehaviour
         Eat,
         Death
     }
+    private State state = State.Idle;
 
-    Animator _animator;
-    State _state = State.Idle;
+    private Animator animator;
 
     private void Start()
     {
-        _animator = GetComponent<Animator>();
+        animator = GetComponent<Animator>();
     }
 
-    public void SetState(State state)
+    public void SetState(State _state)
     {
-        if (_state == state)
+        if (state == _state)
             return;
-        
-        _animator.SetBool(_state.ToString(), false);
-        Invoke(nameof(doAnimation), .2f);
-        _state = state;
-    }
-    private void doAnimation() => _animator.SetBool(_state.ToString(), true);
 
-    public State GetState()
-    {
-        return _state;
+        animator.SetBool(state.ToString(), false);
+        state = _state;
+        Invoke(nameof(doAnimation), .2f);
     }
+    private void doAnimation() => animator.SetBool(state.ToString(), true);
+
+    public State GetState() => state;
+    
 }

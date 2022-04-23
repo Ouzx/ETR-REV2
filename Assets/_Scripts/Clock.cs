@@ -9,7 +9,7 @@ public class Clock : MonoBehaviour
         Day,
         Night
     }
-    public DayState dayState = DayState.Day;
+    private DayState dayState = DayState.Day;
 
     private int day = 0;
     private int hour = 0;
@@ -25,14 +25,17 @@ public class Clock : MonoBehaviour
     public Action OnDawn;
     public Action OnSunset;
 
-    private void Start()
+    public bool clockState = false;
+    public void StartTick()
     {
+        clockState = true;
         InvokeRepeating(nameof(Tick), 0, 1);
     }
 
     private void Tick()
     {
-        second++;
+        if (!clockState) return;
+
         if (second >= MINUTE)
         {
             minute++;
@@ -56,14 +59,19 @@ public class Clock : MonoBehaviour
             dayState = DayState.Day;
             OnSunset();
         }
+
         if (hour == SUNSET)
         {
             dayState = DayState.Night;
             OnDawn();
         }
+
+        second++;
     }
 
     public string GetTime() => hour.ToString("00") + ":" + minute.ToString("00") + ":" + second.ToString("00");
 
-    public string GetDay() => "Day: " + day.ToString("000"); 
+    public string GetDay() => "Day: " + day.ToString("000");
+
+    public DayState GetDayState() => dayState;
 }
