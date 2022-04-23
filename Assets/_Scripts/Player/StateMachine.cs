@@ -21,7 +21,7 @@ public class StateMachine : MonoBehaviour
         _animator = GetComponent<Animator>();
     }
 
-    public void ChangeState(State state)
+    public void SetState(State state)
     {
         if (_state == state)
             return;
@@ -31,8 +31,6 @@ public class StateMachine : MonoBehaviour
         _state = state;
     }
     private void doAnimation() => _animator.SetBool(_state.ToString(), true);
-
-    
 
     public State GetState()
     {
