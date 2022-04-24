@@ -6,14 +6,16 @@ using UnityEngine.AI;
 
 public class Motor : MonoBehaviour
 {
-    private Movement movement;
     private StateMachine stateMachine;
+    private LookAround lookAround;
+    private Movement movement;
     private Player player;
     
     private void Start()
     {
         player = GetComponent<Player>();
         movement = GetComponent<Movement>();
+        lookAround = GetComponent<LookAround>();
         stateMachine = GetComponent<StateMachine>();
     }
 
@@ -55,7 +57,7 @@ public class Motor : MonoBehaviour
             // Look for food
             if (player.stats.GetIsHungry())
             {
-                
+                Vector3 movePoint = lookAround.Search();
             }
             else
             {

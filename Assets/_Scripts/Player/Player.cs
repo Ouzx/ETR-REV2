@@ -12,6 +12,11 @@ public class Player : MonoBehaviour
         gameManager = GameManager.instance;
     }
 
+    public void GetTired(float Distance)
+    {
+        
+    }
+
     private void Regen()
     {
         
