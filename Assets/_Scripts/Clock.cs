@@ -4,33 +4,30 @@ using System;
 
 public class Clock : MonoBehaviour
 {
-    public enum DayState
-    {
-        Day,
-        Night
-    }
-    private DayState dayState = DayState.Day;
-
-    private int day = 0;
-    private int hour = 0;
-    private int minute = 0;
-    private int second = 0;
-
     private const int DAY = 86400;
     private const int DAWN = 21600;
     private const int SUNSET = 0;
     private const int HOUR = 3600;
     private const int MINUTE = 60;
+    
+    public enum DayState
+    {
+        Day,
+        Night
+    }
+    public static DayState dayState { get { return dayState; } set { } }
+    
+    private int day = 0;
+    private int hour = 0;
+    private int minute = 0;
+    private int second = 0;
 
     public Action OnDawn;
     public Action OnSunset;
-
+    public Action OnTick;
+    
     public bool clockState = false;
-    public void StartTick()
-    {
-        clockState = true;
-        InvokeRepeating(nameof(Tick), 0, 1);
-    }
+    public void StartTick() => InvokeRepeating(nameof(Tick), 0, 1);
 
     private void Tick()
     {
@@ -65,7 +62,7 @@ public class Clock : MonoBehaviour
             dayState = DayState.Night;
             OnDawn();
         }
-
+        OnTick();
         second++;
     }
 
@@ -73,5 +70,4 @@ public class Clock : MonoBehaviour
 
     public string GetDay() => "Day: " + day.ToString("000");
 
-    public DayState GetDayState() => dayState;
 }

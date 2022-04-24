@@ -1,29 +1,30 @@
 // Oz
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
-
-public class PlayerMotor : MonoBehaviour
+using System.Collections;
+public class Movement : MonoBehaviour
 {
+
     [SerializeField] NavMeshAgent agent;
     [SerializeField] StateMachine stateMachine;
 
     public LayerMask GroundLayer, BaseLayer, PlayerLayer, FoodLayer;
-   
+
     private bool isWalkPointSet;
     private Vector3 walkPoint;
     private Transform target;
 
     public Transform PlayerBase;
-    
+
     [SerializeField] float baseRandomRange;
     [SerializeField] Vector3 baseWalkPoint;
     [SerializeField] bool isBaseWalkPointSet;
 
-    private void Update()
-    {
-        
+    public void Walk() 
+    { 
+        // first, look for a target: food or enemy
+        // if there is no target patrol
+        // when player ready to interact: change player state to eat / attack
     }
 
     private Vector3 oldPos;
