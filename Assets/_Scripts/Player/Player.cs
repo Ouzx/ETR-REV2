@@ -3,6 +3,14 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    public enum PlayerState
+    {
+        Awake,
+        Sleep
+    }
+    public PlayerState state;
+
+
     public Stats stats;
 
     private GameManager gameManager;
@@ -17,17 +25,22 @@ public class Player : MonoBehaviour
         
     }
 
+    public void TakeDamage(float damge)
+    {
+        
+    }
+
+    public void Eat(int food)
+    {
+
+    }
     private void Regen()
     {
         
     }
 
-    private void Reproduce()
+    public void Reproduce()
     {
         
     }
-
-    
-
-    
 } 

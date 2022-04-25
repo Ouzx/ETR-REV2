@@ -14,8 +14,10 @@ public class LookAround : MonoBehaviour
     }
 
 
-    public Vector3 Search()
+    public Interactable Search()
     {
+        Interactable interactable = new Interactable();
+
         Collider[] enemies = Physics.OverlapSphere(transform.position, player.stats.GetSightRange(), PlayerLayer, QueryTriggerInteraction.Ignore);
         Collider[] foods = Physics.OverlapSphere(transform.position, player.stats.GetSightRange(), FoodLayer, QueryTriggerInteraction.Ignore);
         Collider[] bushes = Physics.OverlapSphere(transform.position, player.stats.GetSightRange(), BushLayer, QueryTriggerInteraction.Ignore);
@@ -23,22 +25,36 @@ public class LookAround : MonoBehaviour
         if (enemies.Length != 0)
         {
             Transform enemy = GetNearestTarget(enemies);
-            if (attack.ComparePowers(enemy)) return enemy.position;
-            else return GetRandomBasePoint();
+            if (attack.ComparePowers(enemy))
+            {
+                interactable.transform = enemy;
+                interactable.type = Interactable.Type.Enemy;
+            }
+            else {
+                interactable.position = GetRandomBasePoint();
+                interactable.type = Interactable.Type.None;
+            }
         }
         else if (foods.Length != 0)
         {
             Transform food = GetNearestTarget(foods);
-            return food.transform.position;
+            
+            interactable.transform = food.transform;
+            interactable.type = Interactable.Type.Food;
         }
-        else if (bushes.Length != 0) {
+        else if (bushes.Length != 0)
+        {
             Transform bush = GetNearestTarget(bushes);
-            return bush.transform.position;
+            
+            interactable.transform = bush.transform;
+            interactable.type = Interactable.Type.Bush;
         }
         else
         {
-            return GetRandomPoint();
+            interactable.position = GetRandomPoint();
+            interactable.type = Interactable.Type.None;
         }
+        return interactable;
     }
 
     public Vector3 GetRandomBasePoint()

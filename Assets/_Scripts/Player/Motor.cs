@@ -1,99 +1,86 @@
 // Oz
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.AI;
 
 public class Motor : MonoBehaviour
 {
     private StateMachine stateMachine;
+    private GameManager gameManager;
     private LookAround lookAround;
     private Movement movement;
     private Player player;
-    
+    private Attack attack;
+
     private void Start()
     {
         player = GetComponent<Player>();
         movement = GetComponent<Movement>();
         lookAround = GetComponent<LookAround>();
         stateMachine = GetComponent<StateMachine>();
-    }
+    
+        gameManager = GameManager.instance;
 
+        gameManager.clock.OnDawn += OnDawn;
+        gameManager.clock.OnSunset += Sleep;
+    }
     public void Decide()
     {
-        switch (stateMachine.GetState())
-        {
-            case StateMachine.State.Idle:
-                // day ? walk : sleep
-                Idle();
-                break;
-            case StateMachine.State.Walk:
-                // Find something
-                Walk();
-                break;
-            case StateMachine.State.Attack:
-                // Check opponent
-                Attack();
-                break;
-            case StateMachine.State.Eat:
-                // Check food
-                Eat();
-                break;
-            case StateMachine.State.Sleep:
-                // Wait until morning
-                Sleep();
-                break;
-            case StateMachine.State.Death:
-                // destroy
-                Death();
-                break;
-        }
-    }
-
-    private void Idle()
-    {
-        if (Clock.dayState == Clock.DayState.Day)
+        while (player.state == Player.PlayerState.Awake)
         {
             // Look for food
             if (player.stats.GetIsHungry())
             {
-                Vector3 movePoint = lookAround.Search();
+                Interactable target = lookAround.Search();
+                bool isArrived = movement.Walk(target.position);
+
+                if (isArrived)
+                {
+                    attack.Interact(target);
+                }
             }
             else
             {
-                
+                Vector3 basePoint = lookAround.GetRandomBasePoint();
+
+                bool isArrived = movement.Walk(basePoint);
+
+                if (isArrived)
+                {
+                    stateMachine.SetState(StateMachine.State.Idle);
+                }
             }
         }
-        else if (Clock.dayState == Clock.DayState.Night)
+    }
+    public void OnDawn()
+    {
+        if (!player.stats.GetIsHungry())
         {
-            // Go base
+            player.Reproduce();
         }
+        
+        player.stats.SetIsHungry(true);
+        stateMachine.SetState(StateMachine.State.Idle);
+        player.state = Player.PlayerState.Awake;
     }
 
-    private void Walk()
+    public void OnSunset()
     {
-        // 
+        if(movement.WhereAmI() == Movement.Locations.Wilderness)
+        {
+            movement.DoWhenAtBase += Sleep;
+        }
+        else Sleep();
     }
 
-    private void Attack()
+    public void Sleep()
     {
-
+        player.state = Player.PlayerState.Sleep;
+        stateMachine.SetState(StateMachine.State.Sleep);
     }
 
-    private void Eat()
+    private void OnDestroy()
     {
-
+        gameManager.clock.OnDawn -= OnDawn;
+        gameManager.clock.OnSunset -= OnSunset;
     }
-
-    private void Sleep()
-    {
-
-    }
-
-    private void Death()
-    {
-        Destroy(gameObject);
-    }
-
 
 }
