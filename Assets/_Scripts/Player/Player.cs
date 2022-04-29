@@ -1,6 +1,12 @@
 // Oz
 using UnityEngine;
 
+[RequireComponent(typeof(Stats))]
+[RequireComponent(typeof(Motor))]
+[RequireComponent(typeof(Touch))]
+[RequireComponent(typeof(Movement))]
+[RequireComponent(typeof(LookAround))]
+[RequireComponent(typeof(StateMachine))]
 public class Player : MonoBehaviour
 {
     public enum PlayerState

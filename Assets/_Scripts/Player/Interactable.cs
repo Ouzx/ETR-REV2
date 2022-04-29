@@ -8,7 +8,9 @@ public class Interactable
         Food,
         Enemy,
         Bush,
-        None
+        None,
+        ToBase
+
     }
     public Type type;
     

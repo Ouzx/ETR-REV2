@@ -14,6 +14,7 @@ public class Eatable : MonoBehaviour
         }
         else
         {
+            // TODO: Can raise an error
             Invoke(nameof(DestroySelf), 0.1f);
             return 0;
         }

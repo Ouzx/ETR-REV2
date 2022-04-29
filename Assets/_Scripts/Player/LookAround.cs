@@ -4,13 +4,13 @@ using UnityEngine;
 public class LookAround : MonoBehaviour
 {
     private Player player;
-    private Attack attack;
+    private Touch touch;
     [SerializeField] private LayerMask PlayerLayer, FoodLayer, BushLayer;
 
     private void Start()
     {
         player = GetComponent<Player>();
-        attack = GetComponent<Attack>();
+        touch = GetComponent<Touch>();
     }
 
 
@@ -25,27 +25,33 @@ public class LookAround : MonoBehaviour
         if (enemies.Length != 0)
         {
             Transform enemy = GetNearestTarget(enemies);
-            if (attack.ComparePowers(enemy))
+            if (touch.ComparePowers(enemy))
             {
                 interactable.transform = enemy;
                 interactable.type = Interactable.Type.Enemy;
             }
-            else {
+            else
+            {
                 interactable.position = GetRandomBasePoint();
                 interactable.type = Interactable.Type.None;
             }
         }
+        else if (!player.stats.GetIsHungry())
+        {
+            interactable.position = GetRandomBasePoint();
+            interactable.type = Interactable.Type.ToBase;
+        }
         else if (foods.Length != 0)
         {
             Transform food = GetNearestTarget(foods);
-            
+
             interactable.transform = food.transform;
             interactable.type = Interactable.Type.Food;
         }
         else if (bushes.Length != 0)
         {
             Transform bush = GetNearestTarget(bushes);
-            
+
             interactable.transform = bush.transform;
             interactable.type = Interactable.Type.Bush;
         }

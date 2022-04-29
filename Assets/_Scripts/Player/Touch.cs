@@ -1,7 +1,7 @@
 // Oz
 using UnityEngine;
 
-public class Attack : MonoBehaviour
+public class Touch : MonoBehaviour
 {
     private Player player;
     private StateMachine stateMachine;

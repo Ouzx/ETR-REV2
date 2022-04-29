@@ -54,13 +54,13 @@ public class Clock : MonoBehaviour
         if (hour == DAWN)
         {
             dayState = DayState.Day;
-            OnSunset();
+            OnDawn();
         }
 
         if (hour == SUNSET)
         {
             dayState = DayState.Night;
-            OnDawn();
+            OnSunset();
         }
         OnTick();
         second++;

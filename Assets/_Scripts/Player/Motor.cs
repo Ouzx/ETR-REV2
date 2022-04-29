@@ -1,53 +1,47 @@
 // Oz
+using System.Collections;
 using UnityEngine;
 
 public class Motor : MonoBehaviour
 {
     private StateMachine stateMachine;
-    private GameManager gameManager;
     private LookAround lookAround;
     private Movement movement;
     private Player player;
-    private Attack attack;
+    private Touch touch;
 
     private void Start()
     {
+        touch = GetComponent<Touch>();
         player = GetComponent<Player>();
         movement = GetComponent<Movement>();
         lookAround = GetComponent<LookAround>();
         stateMachine = GetComponent<StateMachine>();
-    
-        gameManager = GameManager.instance;
 
-        gameManager.clock.OnDawn += OnDawn;
-        gameManager.clock.OnSunset += Sleep;
+        GameManager.instance.clock.OnDawn += OnDawn;
+        GameManager.instance.clock.OnSunset += Sleep;
+
+        StartCoroutine(Decide());
     }
-    public void Decide()
+    public IEnumerator Decide()
     {
-        while (player.state == Player.PlayerState.Awake)
+        while (true)
         {
-            // Look for food
-            if (player.stats.GetIsHungry())
+            while (player.state == Player.PlayerState.Awake)
             {
                 Interactable target = lookAround.Search();
                 bool isArrived = movement.Walk(target.position);
 
-                if (isArrived)
+                if (target.type == Interactable.Type.ToBase)
                 {
-                    attack.Interact(target);
+                    if (isArrived)
+                        stateMachine.SetState(StateMachine.State.Idle);
                 }
+                else if (isArrived)
+                    touch.Interact(target);
+                yield return new WaitForEndOfFrame();
             }
-            else
-            {
-                Vector3 basePoint = lookAround.GetRandomBasePoint();
-
-                bool isArrived = movement.Walk(basePoint);
-
-                if (isArrived)
-                {
-                    stateMachine.SetState(StateMachine.State.Idle);
-                }
-            }
+            yield return null;
         }
     }
     public void OnDawn()
@@ -56,7 +50,7 @@ public class Motor : MonoBehaviour
         {
             player.Reproduce();
         }
-        
+
         player.stats.SetIsHungry(true);
         stateMachine.SetState(StateMachine.State.Idle);
         player.state = Player.PlayerState.Awake;
@@ -64,7 +58,7 @@ public class Motor : MonoBehaviour
 
     public void OnSunset()
     {
-        if(movement.WhereAmI() == Movement.Locations.Wilderness)
+        if (movement.WhereAmI() == Movement.Locations.Wilderness)
         {
             movement.DoWhenAtBase += Sleep;
         }
@@ -75,12 +69,15 @@ public class Motor : MonoBehaviour
     {
         player.state = Player.PlayerState.Sleep;
         stateMachine.SetState(StateMachine.State.Sleep);
+
+        if (movement.DoWhenAtBase != null)
+            movement.DoWhenAtBase -= Sleep;
     }
 
     private void OnDestroy()
     {
-        gameManager.clock.OnDawn -= OnDawn;
-        gameManager.clock.OnSunset -= OnSunset;
+        GameManager.instance.clock.OnDawn -= OnDawn;
+        GameManager.instance.clock.OnSunset -= OnSunset;
     }
 
 }
