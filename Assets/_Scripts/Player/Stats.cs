@@ -4,7 +4,7 @@ public class Stats : MonoBehaviour
 {
     #region NAME
     private new string name;
-    
+
     public string GetName() => name;
 
     public void SetName(string name) => this.name = name;
@@ -17,7 +17,27 @@ public class Stats : MonoBehaviour
 
     private void UpdatePower()
     {
-        // power calc is here
+        float oldPower = power;
+
+        power = GetSpeed() +
+                GetMaxHealth() +
+                GetMaxEnergy() +
+                GetDamage() +
+                GetAttackSpeed() +
+                GetAttackRange() +
+                GetSightRange();
+
+        float powerDifference = power / oldPower;
+
+        // STATS
+        maxHunger *= powerDifference;
+
+        // COSTS
+        walkingCost *= powerDifference;
+        attackingCost *= powerDifference;
+
+        
+        transform.localScale = Vector3.one * powerDifference;
     }
 
     #endregion
@@ -33,8 +53,7 @@ public class Stats : MonoBehaviour
 
     public void SetHealth(float health)
     {
-        this.health = health;
-        UpdatePower();
+        this.health += health;
     }
 
     public void SetMaxHealth(float maxHealth)
@@ -42,11 +61,10 @@ public class Stats : MonoBehaviour
         this.maxHealth = maxHealth;
         UpdatePower();
     }
-    
+
     public void SetHealthRegen(float healthRegen)
     {
         this.healthRegen = healthRegen;
-        UpdatePower();
     }
 
 
@@ -65,8 +83,7 @@ public class Stats : MonoBehaviour
 
     public void SetEnergy(float energy)
     {
-        this.energy = energy;
-        UpdatePower();
+        this.energy += energy;
     }
 
     public void SetMaxEnergy(float maxEnergy)
@@ -78,73 +95,49 @@ public class Stats : MonoBehaviour
     public void SetEnergyRegen(float energyRegen)
     {
         this.energyRegen = energyRegen;
-        UpdatePower();
-    }
-
-    public void SetWalkingCost(float walkingCost)
-    {
-        this.walkingCost = walkingCost;
-        UpdatePower();
     }
 
     #endregion
 
     #region Hungerness
-    [SerializeField] private float hunger;
+    [SerializeField] private float hungerness;
     [SerializeField] private float maxHunger;
     [SerializeField] private bool isHungry;
-    [SerializeField] private float hungerCost;
 
-    public float GetHunger() => hunger;
-    public float GetMaxHunger() => maxHunger;
+    public float GetHungerness() => hungerness;
     public bool GetIsHungry() => isHungry;
-    public float GetHungerCost() => hungerCost;
-    
-    public void SetHunger(float hunger)
-    {
-        this.hunger = hunger;
-        UpdatePower();
-    }
 
-    public void SetMaxHunger(float maxHunger)
+    public void SetHungeress(float hungerness)
     {
-        this.maxHunger = maxHunger;
-        UpdatePower();
+        this.hungerness += hungerness;
+        if (this.hungerness >= maxHunger)
+        {
+            this.hungerness = maxHunger;
+            isHungry = false;
+        }
     }
 
     public void SetIsHungry(bool isHungry)
     {
+        if (!isHungry) hungerness = 0;
+        else hungerness = maxHunger;
+        
         this.isHungry = isHungry;
-        UpdatePower();
     }
 
-    public void SetHungerCost(float hungerCost)
-    {
-        this.hungerCost = hungerCost;
-        UpdatePower();
-    }
 
     #endregion
 
     #region Speed
     [SerializeField] private float speed;
-    [SerializeField] private float maxSpeed;
 
     public float GetSpeed() => speed;
-    public float GetMaxSpeed() => maxSpeed;
 
     public void SetSpeed(float speed)
     {
         this.speed = speed;
         UpdatePower();
     }
-
-    public void SetMaxSpeed(float maxSpeed)
-    {
-        this.maxSpeed = maxSpeed;
-        UpdatePower();
-    }
-
     #endregion
 
     #region Attack
@@ -168,21 +161,13 @@ public class Stats : MonoBehaviour
         UpdatePower();
     }
 
-    public void SetAttackingCost(float attackingCost)
-    {
-        this.attackingCost = attackingCost;
-        UpdatePower();
-    }
-
     #endregion
 
     #region Range
     [SerializeField] private float sightRange;
-    [SerializeField] private float walkPointRange;
     [SerializeField] private float attackRange;
 
     public float GetSightRange() => sightRange;
-    public float GetWalkPointRange() => walkPointRange;
     public float GetAttackRange() => attackRange;
 
     public void SetSightRange(float sightRange)
@@ -190,18 +175,6 @@ public class Stats : MonoBehaviour
         this.sightRange = sightRange;
         UpdatePower();
     }
-
-    public void SetWalkPointRange(float walkPointRange)
-    {
-        this.walkPointRange = walkPointRange;
-        UpdatePower();
-    }
-
-    public void SetAttackRange(float attackRange)
-    {
-        this.attackRange = attackRange;
-        UpdatePower();
-    }
     #endregion
-    
+
 }
