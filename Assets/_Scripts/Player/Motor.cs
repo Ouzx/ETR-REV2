@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Motor : MonoBehaviour
 {
+    private StatController statController;
     private StateMachine stateMachine;
     private LookAround lookAround;
     private Movement movement;
@@ -18,8 +19,10 @@ public class Motor : MonoBehaviour
         lookAround = GetComponent<LookAround>();
         stateMachine = GetComponent<StateMachine>();
 
+        player.stats.DoWhenDied += Die;
+
         GameManager.instance.clock.OnDawn += OnDawn;
-        GameManager.instance.clock.OnSunset += Sleep;
+        GameManager.instance.clock.OnSunset += Sleep;      
 
         StartCoroutine(Decide());
     }
@@ -46,14 +49,15 @@ public class Motor : MonoBehaviour
     }
     public void OnDawn()
     {
-        if (!player.stats.GetIsHungry())
-        {
-            player.Reproduce();
+        if(movement.WhereAmI() == Movement.Locations.Base){
+            if (!player.stats.GetIsHungry())
+            {
+                statController.Reproduce(lookAround.GetRandomBasePoint());
+            }
+            player.stats.SetIsHungry(true);
+            stateMachine.SetState(StateMachine.State.Idle);
+            player.state = Player.PlayerState.Awake;
         }
-
-        player.stats.SetIsHungry(true);
-        stateMachine.SetState(StateMachine.State.Idle);
-        player.state = Player.PlayerState.Awake;
     }
 
     public void OnSunset()
@@ -74,10 +78,21 @@ public class Motor : MonoBehaviour
             movement.DoWhenAtBase -= Sleep;
     }
 
+    private void Die()
+    {
+        stateMachine.SetState(StateMachine.State.Death);
+        
+        void DestroySelf() => Destroy(gameObject);
+
+        Invoke(nameof(DestroySelf), 5f);
+    }
+
+    
+
     private void OnDestroy()
     {
         GameManager.instance.clock.OnDawn -= OnDawn;
-        GameManager.instance.clock.OnSunset -= OnSunset;
+        GameManager.instance.clock.OnSunset -= OnSunset;      
     }
 
 }

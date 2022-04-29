@@ -15,9 +15,9 @@ public class Movement : MonoBehaviour
         Wilderness
     }
 
-    [SerializeField] private NavMeshAgent agent;
     [SerializeField] private LayerMask baseLayer;
     private StateMachine stateMachine;
+    private NavMeshAgent agent; 
     private Player player;
 
     public Action DoWhenAtBase;
@@ -28,6 +28,7 @@ public class Movement : MonoBehaviour
     private void Start()
     {
         stateMachine = GetComponent<StateMachine>();
+        agent = GetComponent<NavMeshAgent>();
         player = GetComponent<Player>();
         startPosition = new Vector3();
     }
@@ -61,7 +62,7 @@ public class Movement : MonoBehaviour
         if (WhereAmI() == Locations.Wilderness)
         {
             float distance = GetDistance(startPosition);
-            player.GetTired(distance);
+            player.statController.GetTired(distance);
             startPosition = transform.position;
         }
     }

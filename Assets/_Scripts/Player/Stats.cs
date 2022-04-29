@@ -2,12 +2,14 @@
 using UnityEngine;
 public class Stats : MonoBehaviour
 {
+    public System.Action DoWhenDied;
+
+    private void Start() => name = NameGen.GetName();
+
     #region NAME
     private new string name;
 
     public string GetName() => name;
-
-    public void SetName(string name) => this.name = name;
     #endregion
 
     #region Power
@@ -35,8 +37,8 @@ public class Stats : MonoBehaviour
         // COSTS
         walkingCost *= powerDifference;
         attackingCost *= powerDifference;
+        hungerCost *= powerDifference;
 
-        
         transform.localScale = Vector3.one * powerDifference;
     }
 
@@ -53,7 +55,16 @@ public class Stats : MonoBehaviour
 
     public void SetHealth(float health)
     {
-        this.health += health;
+        var tempHealth = health + this.health;
+        if (tempHealth < 0)
+        {
+            this.health = 0;
+            DoWhenDied();
+        }
+        if (tempHealth < maxHealth)
+            this.health = tempHealth;
+        else
+            this.health = maxHealth;
     }
 
     public void SetMaxHealth(float maxHealth)
@@ -66,7 +77,6 @@ public class Stats : MonoBehaviour
     {
         this.healthRegen = healthRegen;
     }
-
 
     #endregion
 
@@ -83,7 +93,17 @@ public class Stats : MonoBehaviour
 
     public void SetEnergy(float energy)
     {
-        this.energy += energy;
+        var tempEnergy = this.energy + energy;
+
+        if (tempEnergy < 0)
+        {
+            this.energy = 0;
+            SetHealth(energy);
+        }
+        else if (tempEnergy < maxEnergy)
+            this.energy = tempEnergy;
+        else if (tempEnergy > maxEnergy)
+            this.energy = maxEnergy;
     }
 
     public void SetMaxEnergy(float maxEnergy)
@@ -102,9 +122,11 @@ public class Stats : MonoBehaviour
     #region Hungerness
     [SerializeField] private float hungerness;
     [SerializeField] private float maxHunger;
+    [SerializeField] private float hungerCost;
     [SerializeField] private bool isHungry;
 
     public float GetHungerness() => hungerness;
+    public float GetHungerCost() => hungerCost;
     public bool GetIsHungry() => isHungry;
 
     public void SetHungeress(float hungerness)
@@ -119,9 +141,9 @@ public class Stats : MonoBehaviour
 
     public void SetIsHungry(bool isHungry)
     {
-        if (!isHungry) hungerness = 0;
+        if (isHungry) hungerness = 0;
         else hungerness = maxHunger;
-        
+
         this.isHungry = isHungry;
     }
 
