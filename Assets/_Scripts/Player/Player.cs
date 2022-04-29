@@ -28,12 +28,12 @@ public class Player : MonoBehaviour
 
     public void GetTired(float Distance)
     {
-        
+
     }
 
     public void TakeDamage(float damge)
     {
-        
+
     }
 
     public void Eat(int food)
@@ -42,11 +42,28 @@ public class Player : MonoBehaviour
     }
     private void Regen()
     {
-        
+        if (!stats.GetIsHungry()) return;
+
+        HealthRegen();
+        EnergyRegen();
+    }
+
+    private void HealthRegen()
+    {
+        if (stats.GetHealth() >= stats.GetMaxHealth()) return;
+
+        stats.SetHealth(stats.GetHealth() + stats.GetHealthRegen());
+    }
+
+    private void EnergyRegen()
+    {
+        if (stats.GetEnergy() >= stats.GetMaxEnergy()) return;
+
+        stats.SetEnergy(stats.GetEnergy() + stats.GetEnergyRegen());
     }
 
     public void Reproduce()
     {
-        
+
     }
-} 
+}
