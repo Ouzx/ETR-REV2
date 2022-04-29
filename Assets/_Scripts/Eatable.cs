@@ -7,6 +7,8 @@ public class Eatable : MonoBehaviour
     private bool empty = false;
     public int GetBite()
     {
+        void DestroySelf() => gameObject.SetActive(false);
+
         if (empty) return 0;
 
         if (amount > 0)
@@ -23,6 +25,4 @@ public class Eatable : MonoBehaviour
         }
 
     }
-
-    private void DestroySelf() => gameObject.SetActive(false);;
 }

@@ -16,6 +16,7 @@ public class Movement : MonoBehaviour
     }
 
     [SerializeField] private LayerMask baseLayer;
+    private StatController statController;
     private StateMachine stateMachine;
     private NavMeshAgent agent; 
     private Player player;
@@ -27,6 +28,7 @@ public class Movement : MonoBehaviour
 
     private void Start()
     {
+        statController = GetComponent<StatController>();
         stateMachine = GetComponent<StateMachine>();
         agent = GetComponent<NavMeshAgent>();
         player = GetComponent<Player>();
@@ -62,7 +64,7 @@ public class Movement : MonoBehaviour
         if (WhereAmI() == Locations.Wilderness)
         {
             float distance = GetDistance(startPosition);
-            player.statController.GetTired(distance);
+            statController.CastWalking(distance);
             startPosition = transform.position;
         }
     }

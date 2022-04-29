@@ -1,5 +1,6 @@
 // Oz
 using UnityEngine;
+
 public class Stats : MonoBehaviour
 {
     public System.Action DoWhenDied;
@@ -158,6 +159,7 @@ public class Stats : MonoBehaviour
     public void SetSpeed(float speed)
     {
         this.speed = speed;
+        GetComponent<UnityEngine.AI.NavMeshAgent>().acceleration = speed; // TODO: SPEED OR ACCELERATION?
         UpdatePower();
     }
     #endregion

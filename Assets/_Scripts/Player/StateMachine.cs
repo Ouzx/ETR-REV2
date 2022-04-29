@@ -23,14 +23,16 @@ public class StateMachine : MonoBehaviour
 
     public void SetState(State _state)
     {
+        void doAnimation() => animator.SetBool(state.ToString(), true);
+        
         if (state == _state)
             return;
 
         animator.SetBool(state.ToString(), false);
         state = _state;
         Invoke(nameof(doAnimation), .2f);
+        
     }
-    private void doAnimation() => animator.SetBool(state.ToString(), true);
 
     public State GetState() => state;
     
