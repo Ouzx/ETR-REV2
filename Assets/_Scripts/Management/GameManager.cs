@@ -20,29 +20,14 @@ public class GameManager : MonoBehaviour
 
     public Action OnUIUpdate;
 
-    private delegate void Refresh();
-    private void RefreshUI(Refresh refresh=null)
+    private void Start()
     {
-        refresh?.Invoke();
-        OnUIUpdate?.Invoke();
+        clock = GetComponent<Clock>();
     }
 
     #region EP
     private int EP;
     
-    public void EarnEP() => RefreshUI(() => EP++);
-    public bool SpendEP()
-    {
-        if (EP - 1 >= 0)
-        {
-            EP--;
-            RefreshUI();
-            return true;
-        }
-        OnUIUpdate?.Invoke();
-        return false;
-    }
-
     public int GetEP() => EP;
     public void SetEP(int value) => EP = value;
 
@@ -51,20 +36,29 @@ public class GameManager : MonoBehaviour
     #region RP
     private int RP;
 
-    public void EarnRP() => RefreshUI(() => RP++);
-    public bool SpendRP()
-    {
-        if (RP - 1 >= 0)
-        {
-            RP--;
-            RefreshUI();
-            return true;
-        }
-        OnUIUpdate?.Invoke();
-        return false;
-    }
-
     public int GetRP() => RP;
     public void SetRP(int value) => RP = value;
     #endregion
+
+    #region Earn / Spend
+
+    public void Earn(ref int value)
+    {
+        value++;
+        OnUIUpdate?.Invoke();
+    }
+
+    public bool Spend(ref int value)
+    {
+        if (value - 1 >= 0)
+        {
+            value--;
+            OnUIUpdate?.Invoke();
+            return true;
+        }
+        return false;
+    }
+
+    #endregion
+
 }

@@ -21,6 +21,4 @@ public class Player : MonoBehaviour
     public void TakeDamage(float damage) => stats.SetHealth(-damage);
 
     public void Eat(int food) => stats.SetHungeress(food);
-
-    
 }
