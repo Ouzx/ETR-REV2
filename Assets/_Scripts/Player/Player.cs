@@ -10,6 +10,13 @@ using UnityEngine;
 [RequireComponent(typeof(StatController))]
 public class Player : MonoBehaviour
 {
+    public enum PlayerType
+    {
+        Player,
+        Bot
+    }
+    public PlayerType playerType;
+
     public enum PlayerState
     {
         Awake,

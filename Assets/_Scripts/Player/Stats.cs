@@ -4,8 +4,15 @@ using UnityEngine;
 public class Stats : MonoBehaviour
 {
     public System.Action DoWhenDied;
+    public UIPlayer player;
 
-    private void Start() => name = NameGen.GetName();
+    private void Start()
+    {
+        name = NameGen.GetName();
+        player = GetComponent<Player>().playerType == Player.PlayerType.Player ?
+                                                        GameManager.instance.player :
+                                                        GameManager.instance.bot;
+    }
 
     #region NAME
     private new string name;
@@ -13,46 +20,11 @@ public class Stats : MonoBehaviour
     public string GetName() => name;
     #endregion
 
-    #region Power
-    [SerializeField] private float power;
-
-    public float GetPower() => power;
-
-    private void UpdatePower()
-    {
-        float oldPower = power;
-
-        power = GetSpeed() +
-                GetMaxHealth() +
-                GetMaxEnergy() +
-                GetDamage() +
-                GetAttackSpeed() +
-                GetAttackRange() +
-                GetSightRange();
-
-        float powerDifference = power / oldPower;
-
-        // STATS
-        maxHunger *= powerDifference;
-
-        // COSTS
-        walkingCost *= powerDifference;
-        attackingCost *= powerDifference;
-        hungerCost *= powerDifference;
-
-        transform.localScale = Vector3.one * powerDifference;
-    }
-
-    #endregion
-
     #region Health
     [SerializeField] private float health;
-    [SerializeField] private float maxHealth;
-    [SerializeField] private float healthRegen;
 
     public float GetHealth() => health;
-    public float GetMaxHealth() => maxHealth;
-    public float GetHealthRegen() => healthRegen;
+    public float GetHealthRegen() => player.healthRegen;
 
     public void SetHealth(float health)
     {
@@ -62,35 +34,20 @@ public class Stats : MonoBehaviour
             this.health = 0;
             DoWhenDied();
         }
-        if (tempHealth < maxHealth)
+        if (tempHealth < player.health)
             this.health = tempHealth;
         else
-            this.health = maxHealth;
+            this.health = player.health;
     }
-
-    public void SetMaxHealth(float maxHealth)
-    {
-        this.maxHealth = maxHealth;
-        UpdatePower();
-    }
-
-    public void SetHealthRegen(float healthRegen)
-    {
-        this.healthRegen = healthRegen;
-    }
-
     #endregion
 
     #region Energy
     [SerializeField] private float energy;
-    [SerializeField] private float maxEnergy;
-    [SerializeField] private float energyRegen;
-    [SerializeField] private float walkingCost;
 
     public float GetEnergy() => energy;
-    public float GetMaxEnergy() => maxEnergy;
-    public float GetEnergyRegen() => energyRegen;
-    public float GetWalkingCost() => walkingCost;
+    public float GetSpeed() => player.speed;
+    public float GetEnergyRegen() => player.energyRegen;
+    public float GetWalkingCost() => player.walkingCost;
 
     public void SetEnergy(float energy)
     {
@@ -101,41 +58,27 @@ public class Stats : MonoBehaviour
             this.energy = 0;
             SetHealth(energy);
         }
-        else if (tempEnergy < maxEnergy)
+        else if (tempEnergy < player.energy)
             this.energy = tempEnergy;
-        else if (tempEnergy > maxEnergy)
-            this.energy = maxEnergy;
+        else
+            this.energy = player.energy;
     }
-
-    public void SetMaxEnergy(float maxEnergy)
-    {
-        this.maxEnergy = maxEnergy;
-        UpdatePower();
-    }
-
-    public void SetEnergyRegen(float energyRegen)
-    {
-        this.energyRegen = energyRegen;
-    }
-
     #endregion
 
     #region Hungerness
     [SerializeField] private float hungerness;
-    [SerializeField] private float maxHunger;
-    [SerializeField] private float hungerCost;
     [SerializeField] private bool isHungry;
 
     public float GetHungerness() => hungerness;
-    public float GetHungerCost() => hungerCost;
+    public float GetHungerCost() => player.hungerCost;
     public bool GetIsHungry() => isHungry;
 
     public void SetHungeress(float hungerness)
     {
         this.hungerness += hungerness;
-        if (this.hungerness >= maxHunger)
+        if (this.hungerness >= player.hungerness)
         {
-            this.hungerness = maxHunger;
+            this.hungerness = player.hungerness;
             isHungry = false;
         }
     }
@@ -143,7 +86,7 @@ public class Stats : MonoBehaviour
     public void SetIsHungry(bool isHungry)
     {
         if (isHungry) hungerness = 0;
-        else hungerness = maxHunger;
+        else hungerness = player.hungerness;
 
         this.isHungry = isHungry;
     }
@@ -151,54 +94,18 @@ public class Stats : MonoBehaviour
 
     #endregion
 
-    #region Speed
-    [SerializeField] private float speed;
-
-    public float GetSpeed() => speed;
-
-    public void SetSpeed(float speed)
-    {
-        this.speed = speed;
-        GetComponent<UnityEngine.AI.NavMeshAgent>().acceleration = speed; // TODO: SPEED OR ACCELERATION?
-        UpdatePower();
-    }
-    #endregion
-
     #region Attack
-    [SerializeField] private float damage;
-    [SerializeField] private float attackSpeed;
-    [SerializeField] private float attackingCost;
-
-    public float GetDamage() => damage;
-    public float GetAttackSpeed() => attackSpeed;
-    public float GetAttackingCost() => attackingCost;
-
-    public void SetDamage(float damage)
-    {
-        this.damage = damage;
-        UpdatePower();
-    }
-
-    public void SetAttackSpeed(float attackSpeed)
-    {
-        this.attackSpeed = attackSpeed;
-        UpdatePower();
-    }
-
+    public float GetDamage() => player.damage;
+    public float GetAttackSpeed() => player.attackSpeed;
+    public float GetAttackingCost() => player.attackingCost;
     #endregion
 
     #region Range
-    [SerializeField] private float sightRange;
     [SerializeField] private float attackRange;
 
-    public float GetSightRange() => sightRange;
+    public float GetSightRange() => player.sightRange;
     public float GetAttackRange() => attackRange;
 
-    public void SetSightRange(float sightRange)
-    {
-        this.sightRange = sightRange;
-        UpdatePower();
-    }
     #endregion
 
 }

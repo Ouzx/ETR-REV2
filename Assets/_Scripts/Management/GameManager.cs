@@ -15,30 +15,18 @@ public class GameManager : MonoBehaviour
     }
     #endregion
     
-    public Clock clock;
-    public UIPlayer uiPlayer = new UIPlayer(); // FILL THIS VIA UIManager USING predefined go.
-
+    public Clock clock; 
+    // Tum botlar player uzerinden erisiyor. TODO: Bu durumu degistir.
+    public UIPlayer player = new UIPlayer(); // FILL THIS VIA UIManager USING predefined go.
+    public UIPlayer bot = new UIPlayer();     // FILL THIS VIA UIManager USING predefined go.
     public Action OnUIUpdate;
 
+    public int EP;
+    
     private void Start()
     {
         clock = GetComponent<Clock>();
     }
-
-    #region EP
-    private int EP;
-    
-    public int GetEP() => EP;
-    public void SetEP(int value) => EP = value;
-
-    #endregion
-
-    #region RP
-    private int RP;
-
-    public int GetRP() => RP;
-    public void SetRP(int value) => RP = value;
-    #endregion
 
     #region Earn / Spend
 

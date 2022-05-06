@@ -30,7 +30,7 @@ public class Motor : MonoBehaviour
     {
         while (true)
         {
-            while (player.state == Player.PlayerState.Awake)
+            if (player.state == Player.PlayerState.Awake)
             {
                 Interactable target = lookAround.Search();
                 bool isArrived = movement.Walk(target.position);
@@ -42,9 +42,9 @@ public class Motor : MonoBehaviour
                 }
                 else if (isArrived)
                     touch.Interact(target);
-                yield return new WaitForEndOfFrame();
+                
             }
-            yield return null;
+            yield return new WaitForEndOfFrame();
         }
     }
     public void OnDawn()
@@ -57,10 +57,11 @@ public class Motor : MonoBehaviour
             player.stats.SetIsHungry(true);
             stateMachine.SetState(StateMachine.State.Idle);
             player.state = Player.PlayerState.Awake;
-            GameManager.instance.EarnEP();
+            GameManager.instance.Earn( ref GameManager.instance.EP);
         }
     }
 
+    // TODO: Bu kisimda whereami dowhenatbase i zaten fire ediyor. Burada sorun cikabilir?
     public void OnSunset()
     {
         if (movement.WhereAmI() == Movement.Locations.Wilderness)
@@ -81,6 +82,8 @@ public class Motor : MonoBehaviour
 
     private void Die()
     {
+        StopCoroutine(Decide());
+        
         stateMachine.SetState(StateMachine.State.Death);
         
         void DestroySelf() => Destroy(gameObject);

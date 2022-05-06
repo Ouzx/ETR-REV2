@@ -37,9 +37,11 @@ public class Movement : MonoBehaviour
 
     public bool Walk(Vector3 point)
     {
+        agent.acceleration = player.stats.GetSpeed(); // TODO: SPEED OR ACCELERATION?
+
         if (IsArrived(point)) return true;
         StepCheck();
-        if (point != targetPoint)
+        if (point != targetPoint)   
         {
             targetPoint = point;
 

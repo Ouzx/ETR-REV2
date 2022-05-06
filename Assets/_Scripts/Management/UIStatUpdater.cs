@@ -21,7 +21,7 @@ public class UIStatUpdater : MonoBehaviour
         texts[6].text = gm.uiPlayer.healthRegen.ToString();
         texts[7].text = gm.uiPlayer.energyRegen.ToString();
         texts[8].text = gm.uiPlayer.power.ToString();
-        texts[9].text = gm.GetEP().ToString();
-        texts[10].text = gm.GetRP().ToString();
+        texts[9].text = gm.EP.ToString();
+        texts[10].text = gm.RP.ToString();
     }
 }
