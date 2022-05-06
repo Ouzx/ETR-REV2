@@ -15,8 +15,9 @@ public class Clock : MonoBehaviour
         Day,
         Night
     }
-    public static DayState dayState { get { return dayState; } set { } }
-    
+    private static DayState dayState;
+    public static DayState GetDayState() => dayState;
+
     private int day = 0;
     private int hour = 0;
     private int minute = 0;

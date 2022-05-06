@@ -30,17 +30,18 @@ public class GameManager : MonoBehaviour
 
     #region Earn / Spend
 
-    public void Earn(ref int value)
+    public void Earn( int value)
     {
-        value++;
+        EP += value;
         OnUIUpdate?.Invoke();
     }
 
-    public bool Spend(ref int value)
+    public bool Spend(int value)
     {
-        if (value - 1 >= 0)
+        var t = EP - value;
+        if (t >= 0)
         {
-            value--;
+            EP = t;
             OnUIUpdate?.Invoke();
             return true;
         }

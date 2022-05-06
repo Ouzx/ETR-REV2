@@ -1,58 +1,67 @@
 [System.Serializable]
 public class UIPlayer
 {
+    private float _health;
     public float health
     {
-        get { return health; }
+        get { return _health; }
         set
         {
-            health = value;
+            _health = value;
             UpdatePower();
         }
     }
+    public float _energy;
     public float energy
     {
-        get { return energy; }
+        get { return _energy; }
         set
         {
-            energy = value;
+            _energy = value;
             UpdatePower();
         }
     }
     public float hungerness { get; set; }
+    
+    public float _speed;
     public float speed
     {
-        get { return speed; }
+        get { return _speed; }
         set
         {
-            speed = value;
+            _speed = value;
             UpdatePower();
         }
     }
+    public float _attackSpeed;
     public float attackSpeed
     {
-        get { return attackSpeed; }
+        get { return _attackSpeed; }
         set
         {
-            attackSpeed = value;
+            _attackSpeed = value;
             UpdatePower();
         }
     }
+    
+    public float _damage;
     public float damage
     {
-        get { return damage; }
+        get { return _damage; }
         set
         {
-            damage = value;
+            _damage = value;
             UpdatePower();
         }
     }
+
+    public float _sightRange;
     public float sightRange
     {
-        get { return sightRange; }
+        get { return _sightRange; }
         set
         {
-            sightRange = value;
+            _sightRange = value;
             UpdatePower();
         }
     }
@@ -86,5 +95,37 @@ public class UIPlayer
         hungerCost *= powerDifference;
     }
 
-
+    public void Setter(string statType, float value)
+    {
+        switch (statType)
+        {
+            case "health":
+                health = value;
+                break;
+            case "energy":
+                energy = value;
+                break;
+            case "speed":
+                speed = value;
+                break;
+            case "ispos":
+                attackSpeed = value;
+                break;
+            case "damage":
+                damage = value;
+                break;
+            case "sightRange":
+                sightRange = value;
+                break;
+            case "healthRegen":
+                healthRegen = value;
+                break;
+            case "energyRegen":
+                energyRegen = value;
+                break;
+                
+            default:
+                break;
+        }
+    }
 }
