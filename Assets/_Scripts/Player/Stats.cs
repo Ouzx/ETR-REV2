@@ -19,6 +19,10 @@ public class Stats : MonoBehaviour
 
     public string GetName() => name;
     #endregion
+    
+    #region Power
+    public float GetPower() => player.power;
+    #endregion
 
     #region Health
     [SerializeField] private float health;

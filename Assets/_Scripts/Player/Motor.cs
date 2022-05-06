@@ -18,6 +18,7 @@ public class Motor : MonoBehaviour
         movement = GetComponent<Movement>();
         lookAround = GetComponent<LookAround>();
         stateMachine = GetComponent<StateMachine>();
+        statController = GetComponent<StatController>();
 
         player.stats.DoWhenDied += Die;
 

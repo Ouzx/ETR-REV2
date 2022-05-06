@@ -10,7 +10,6 @@ public class StatController : MonoBehaviour
         stats = GetComponent<Stats>();
 
         GameManager.instance.clock.OnTick += Regen;
-        GameManager.instance.clock.OnTick += Starve;
     }
 
     public void Regen()
@@ -20,11 +19,7 @@ public class StatController : MonoBehaviour
             stats.SetHealth(stats.GetHealthRegen());
             stats.SetEnergy(stats.GetEnergyRegen());
         }
-    }
-
-    public void Starve()
-    {
-        if (stats.GetIsHungry())
+        else
             stats.SetEnergy(-stats.GetHungerCost());
     }
 
@@ -40,7 +35,6 @@ public class StatController : MonoBehaviour
     private void OnDestroy()
     {
         GameManager.instance.clock.OnTick -= Regen;
-        GameManager.instance.clock.OnTick -= Starve;
     }
 
 }
