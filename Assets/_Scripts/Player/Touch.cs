@@ -41,7 +41,7 @@ public class Touch : MonoBehaviour
     }
 
     // interaction speed per second
-    private int ISPOS() => (int)(1000 / player.stats.GetAttackSpeed() * 1000);
+    private int ISPOS() => (int)(1000 / (player.stats.GetAttackSpeed() * 1000));
 
 
     // If I am stronger; return true;
