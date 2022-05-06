@@ -4,7 +4,8 @@ using UnityEngine;
 public class Stats : MonoBehaviour
 {
     public System.Action DoWhenDied;
-    public UIPlayer player;
+   
+    [HideInInspector] public UIPlayer player;
 
     private void Start()
     {

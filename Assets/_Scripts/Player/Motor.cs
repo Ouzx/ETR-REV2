@@ -58,7 +58,7 @@ public class Motor : MonoBehaviour
             player.stats.SetIsHungry(true);
             stateMachine.SetState(StateMachine.State.Idle);
             player.state = Player.PlayerState.Awake;
-            GameManager.instance.Earn( ref GameManager.instance.EP);
+            GameManager.instance.Earn();
         }
     }
 

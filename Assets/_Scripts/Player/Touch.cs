@@ -47,7 +47,7 @@ public class Touch : MonoBehaviour
             stateMachine.SetState(StateMachine.State.Eat);
             player.Eat(interactable.transform.GetComponent<Eatable>().GetBite());
             isInteracted = true;
-            Invoke(nameof(ResetInteract), player.stats.GetAttackSpeed());
+            Invoke(nameof(ResetInteract), 1000 / player.stats.GetAttackSpeed());
         }
     }
 

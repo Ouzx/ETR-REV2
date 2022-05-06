@@ -4,11 +4,11 @@ using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
+    public Button increaser, decreaser;
     GameManager gameManager;
-    Button increaser, decreaser;
 
-    public float Increasement = .5f;
-    public string statType;
+    [SerializeField] private float Increasement = .5f;
+    private string statType;
     int level = 0;
     int cost = 1;
 

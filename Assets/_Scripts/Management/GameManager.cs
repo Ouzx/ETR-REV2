@@ -15,13 +15,16 @@ public class GameManager : MonoBehaviour
     }
     #endregion
     
-    public Clock clock; 
-    // Tum botlar player uzerinden erisiyor. TODO: Bu durumu degistir.
-    public UIPlayer player = new UIPlayer(); // FILL THIS VIA UIManager USING predefined go.
-    public UIPlayer bot = new UIPlayer();     // FILL THIS VIA UIManager USING predefined go.
-    public Action OnUIUpdate;
+    public Clock clock;
 
     public int EP;
+
+    [Space]
+    public UIPlayer player = new UIPlayer(); // FILL THIS VIA UIManager USING predefined go.
+    public UIPlayer bot = new UIPlayer();     // FILL THIS VIA UIManager USING predefined go.
+   
+    public Action OnUIUpdate;
+    
     
     private void Start()
     {
@@ -30,9 +33,9 @@ public class GameManager : MonoBehaviour
 
     #region Earn / Spend
 
-    public void Earn( int value)
+    public void Earn()
     {
-        EP += value;
+        EP ++;
         OnUIUpdate?.Invoke();
     }
 

@@ -23,7 +23,13 @@ public class Player : MonoBehaviour
         Sleep
     }
     public PlayerState state;
-    public Stats stats;
+
+    [HideInInspector] public Stats stats;
+
+    private void Start()
+    {
+        stats = GetComponent<Stats>();
+    }
 
     public void TakeDamage(float damage) => stats.SetHealth(-damage);
 

@@ -11,6 +11,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Barney
       objectReference: {fileID: 0}
+    - target: {fileID: 254677980213501294, guid: 60daea2b1235a80479140d8f07a64fe6, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
     - target: {fileID: 631380166593808340, guid: 60daea2b1235a80479140d8f07a64fe6, type: 3}
       propertyPath: m_RootOrder
       value: 0
