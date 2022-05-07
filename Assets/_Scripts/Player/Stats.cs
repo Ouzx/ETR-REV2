@@ -22,14 +22,14 @@ public class Stats : MonoBehaviour
     #endregion
     
     #region Power
-    public float GetPower() => player.power;
+    public float GetPower() => player.Power;
     #endregion
 
     #region Health
-    [SerializeField] private float health;
+    private float health;
 
     public float GetHealth() => health;
-    public float GetHealthRegen() => player.healthRegen;
+    public float GetHealthRegen() => player.HealthRegen;
 
     public void SetHealth(float health)
     {
@@ -39,20 +39,20 @@ public class Stats : MonoBehaviour
             this.health = 0;
             DoWhenDied();
         }
-        if (tempHealth < player.health)
+        if (tempHealth < player.Health)
             this.health = tempHealth;
         else
-            this.health = player.health;
+            this.health = player.Health;
     }
     #endregion
 
     #region Energy
-    [SerializeField] private float energy;
+    private float energy;
 
     public float GetEnergy() => energy;
-    public float GetSpeed() => player.speed;
-    public float GetEnergyRegen() => player.energyRegen;
-    public float GetWalkingCost() => player.walkingCost;
+    public float GetSpeed() => player.Speed;
+    public float GetEnergyRegen() => player.EnergyRegen;
+    public float GetWalkingCost() => player.WalkingCost;
 
     public void SetEnergy(float energy)
     {
@@ -63,27 +63,27 @@ public class Stats : MonoBehaviour
             this.energy = 0;
             SetHealth(energy);
         }
-        else if (tempEnergy < player.energy)
+        else if (tempEnergy < player.Energy)
             this.energy = tempEnergy;
         else
-            this.energy = player.energy;
+            this.energy = player.Energy;
     }
     #endregion
 
     #region Hungerness
-    [SerializeField] private float hungerness;
-    [SerializeField] private bool isHungry;
+    private float hungerness;
+    private bool isHungry;
 
     public float GetHungerness() => hungerness;
-    public float GetHungerCost() => player.hungerCost;
+    public float GetHungerCost() => player.HungerCost;
     public bool GetIsHungry() => isHungry;
 
     public void SetHungeress(float hungerness)
     {
         this.hungerness += hungerness;
-        if (this.hungerness >= player.hungerness)
+        if (this.hungerness >= player.Hungerness)
         {
-            this.hungerness = player.hungerness;
+            this.hungerness = player.Hungerness;
             isHungry = false;
         }
     }
@@ -91,7 +91,7 @@ public class Stats : MonoBehaviour
     public void SetIsHungry(bool isHungry)
     {
         if (isHungry) hungerness = 0;
-        else hungerness = player.hungerness;
+        else hungerness = player.Hungerness;
 
         this.isHungry = isHungry;
     }
@@ -100,15 +100,15 @@ public class Stats : MonoBehaviour
     #endregion
 
     #region Attack
-    public float GetDamage() => player.damage;
-    public float GetAttackSpeed() => player.attackSpeed;
-    public float GetAttackingCost() => player.attackingCost;
+    public float GetDamage() => player.Damage;
+    public float GetAttackSpeed() => player.AttackSpeed;
+    public float GetAttackingCost() => player.AttackingCost;
     #endregion
 
     #region Range
-    [SerializeField] private float attackRange;
+    private float attackRange;
 
-    public float GetSightRange() => player.sightRange;
+    public float GetSightRange() => player.SightRange;
     public float GetAttackRange() => attackRange;
 
     #endregion

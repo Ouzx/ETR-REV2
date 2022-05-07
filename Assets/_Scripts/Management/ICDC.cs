@@ -48,5 +48,5 @@ public class ICDC : MonoBehaviour
     }
     
     // Uncomment if needed
-    void IncreaseCost() => cost = System.Convert.ToInt32(Mathf.Pow(1.2f, level));
+    // void IncreaseCost() => cost = System.Convert.ToInt32(Mathf.Pow(1.2f, level));
 }

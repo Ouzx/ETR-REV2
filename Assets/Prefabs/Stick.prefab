@@ -44,6 +44,13 @@ GameObject:
   - component: {fileID: 631380166593808340}
   - component: {fileID: 254677980213501295}
   - component: {fileID: 254677980213501280}
+  - component: {fileID: 245433795}
+  - component: {fileID: 245433796}
+  - component: {fileID: 245433797}
+  - component: {fileID: 245433798}
+  - component: {fileID: 245433799}
+  - component: {fileID: 245433800}
+  - component: {fileID: 245433801}
   m_Layer: 0
   m_Name: Stick
   m_TagString: Untagged
@@ -98,6 +105,110 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7befc48fe11ccc0488c2d90bdd10a9af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &245433795
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 254677980213501294}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 279f8f20b1d07d246b2e3eed96e14cf9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerType: 0
+  state: 0
+  stats: {fileID: 0}
+--- !u!114 &245433796
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 254677980213501294}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 972970e55bfedc449b581728ead05db0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &245433797
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 254677980213501294}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35a51c1c8bde28d44afacf5f4b94e2e5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  PlayerLayer:
+    serializedVersion: 2
+    m_Bits: 256
+  FoodLayer:
+    serializedVersion: 2
+    m_Bits: 1024
+  BushLayer:
+    serializedVersion: 2
+    m_Bits: 128
+--- !u!114 &245433798
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 254677980213501294}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 53e2006d07e934d47893f128ecc75c85, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  baseLayer:
+    serializedVersion: 2
+    m_Bits: 6144
+--- !u!114 &245433799
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 254677980213501294}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f3f360ddd163b1449430d90cce23330, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &245433800
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 254677980213501294}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 531e2d79080c7c0418c2d87fa208f484, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &245433801
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 254677980213501294}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5c1fdc5e7941f840a0a8ea514ebea85, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 100
+  energy: 100
+  hungerness: 10
+  isHungry: 1
+  attackRange: 1
 --- !u!1 &961105019416420985
 GameObject:
   m_ObjectHideFlags: 0

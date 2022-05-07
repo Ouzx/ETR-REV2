@@ -29,6 +29,7 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         clock = GetComponent<Clock>();
+        OnUIUpdate?.Invoke();
     }
 
     #region Earn / Spend

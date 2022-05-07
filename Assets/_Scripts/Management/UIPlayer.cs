@@ -1,98 +1,102 @@
+using UnityEngine;
 [System.Serializable]
 public class UIPlayer
 {
-    private float _health;
-    public float health
+    [SerializeField] private float health;
+    public float Health
     {
-        get { return _health; }
+        get { return health; }
         set
         {
-            _health = value;
-            UpdatePower();
-        }
-    }
-    private float _energy;
-    public float energy
-    {
-        get { return _energy; }
-        set
-        {
-            _energy = value;
-            UpdatePower();
-        }
-    }
-    public float hungerness { get; set; }
-
-    private float _speed;
-    public float speed
-    {
-        get { return _speed; }
-        set
-        {
-            _speed = value;
-            UpdatePower();
-        }
-    }
-    private float _attackSpeed;
-    public float attackSpeed
-    {
-        get { return _attackSpeed; }
-        set
-        {
-            _attackSpeed = value;
+            health = value;
             UpdatePower();
         }
     }
 
-    private float _damage;
-    public float damage
+    [SerializeField] private float energy;
+    public float Energy
     {
-        get { return _damage; }
+        get { return energy; }
         set
         {
-            _damage = value;
+            energy = value;
             UpdatePower();
         }
     }
 
-    private float _sightRange;
-    public float sightRange
+    [SerializeField] private float speed;
+    public float Speed
     {
-        get { return _sightRange; }
+        get { return speed; }
         set
         {
-            _sightRange = value;
+            speed = value;
             UpdatePower();
         }
     }
-    public float healthRegen { get; set; }
-    public float energyRegen { get; set; }
-    public float walkingCost { get; set; }
-    public float attackingCost { get; set; }
-    public float hungerCost { get; set; }
 
-    public float power { get; set; }
+    [SerializeField] private float attackSpeed;
+    public float AttackSpeed
+    {
+        get { return attackSpeed; }
+        set
+        {
+            attackSpeed = value;
+            UpdatePower();
+        }
+    }
 
+    [SerializeField] private float damage;
+    public float Damage
+    {
+        get { return damage; }
+        set
+        {
+            damage = value;
+            UpdatePower();
+        }
+    }
+
+    [SerializeField] private float sightRange;
+    public float SightRange
+    {
+        get { return sightRange; }
+        set
+        {
+            sightRange = value;
+            UpdatePower();
+        }
+    }
+
+    public float HealthRegen;
+    public float EnergyRegen;
+
+    public float Hungerness { get; set; }
+    public float WalkingCost { get; set; }
+    public float AttackingCost { get; set; }
+    public float HungerCost { get; set; }
+
+    public float Power { get; set; }
     private void UpdatePower()
     {
-        float oldPower = power;
+        float oldPower = Power;
 
-        power = speed +
-                health +
-                energy +
-                damage +
-                attackSpeed +
-                sightRange;
+        Power = Speed +
+                Health +
+                Energy +
+                Damage +
+                AttackSpeed +
+                SightRange;
 
-        float powerDifference = power / oldPower;
+        float powerDifference = Power / oldPower;
 
         // STATS
-        hungerness *= powerDifference;
+        Hungerness *= powerDifference;
 
         // COSTS
-        walkingCost *= powerDifference;
-        attackingCost *= powerDifference;
-        hungerCost *= powerDifference;
+        WalkingCost *= powerDifference;
+        AttackingCost *= powerDifference;
+        HungerCost *= powerDifference;
     }
 
     public void Setter(ICDC.StatType statType, float value)
@@ -100,28 +104,28 @@ public class UIPlayer
         switch (statType)
         {
             case ICDC.StatType.Health:
-                health = value;
+                Health = value;
                 break;
             case ICDC.StatType.Energy:
-                energy = value;
+                Energy = value;
                 break;
             case ICDC.StatType.Speed:
-                speed = value;
+                Speed = value;
                 break;
             case ICDC.StatType.AttackSpeed:
-                attackSpeed = value;
+                AttackSpeed = value;
                 break;
             case ICDC.StatType.Damage:
-                damage = value;
+                Damage = value;
                 break;
             case ICDC.StatType.SightRange:
-                sightRange = value;
+                SightRange = value;
                 break;
             case ICDC.StatType.HealthRegen:
-                healthRegen = value;
+                HealthRegen = value;
                 break;
             case ICDC.StatType.EnergyRegen:
-                energyRegen = value;
+                EnergyRegen = value;
                 break;
         }
     }
