@@ -4,7 +4,7 @@ using UnityEngine;
 public class Stats : MonoBehaviour
 {
     public System.Action DoWhenDied;
-   
+
     [HideInInspector] public UIPlayer player;
 
     private void Start()
@@ -13,6 +13,7 @@ public class Stats : MonoBehaviour
         player = GetComponent<Player>().playerType == Player.PlayerType.Player ?
                                                         GameManager.instance.player :
                                                         GameManager.instance.bot;
+        GameManager.instance.bot.UpdatePower();
     }
 
     #region NAME
@@ -20,7 +21,7 @@ public class Stats : MonoBehaviour
 
     public string GetName() => name;
     #endregion
-    
+
     #region Power
     public float GetPower() => player.Power;
     #endregion
