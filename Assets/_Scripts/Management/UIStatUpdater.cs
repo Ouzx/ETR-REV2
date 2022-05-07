@@ -1,9 +1,9 @@
 using UnityEngine;
-using TMPro;
+using UnityEngine.UI;
 
 public class UIStatUpdater : MonoBehaviour
 {
-    public TextMeshProUGUI[] texts;
+    public Text[] texts;
     GameManager gm;
     void Start()
     {

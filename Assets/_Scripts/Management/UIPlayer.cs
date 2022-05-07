@@ -95,36 +95,33 @@ public class UIPlayer
         hungerCost *= powerDifference;
     }
 
-    public void Setter(string statType, float value)
+    public void Setter(ICDC.StatType statType, float value)
     {
         switch (statType)
         {
-            case "health":
+            case ICDC.StatType.Health:
                 health = value;
                 break;
-            case "energy":
+            case ICDC.StatType.Energy:
                 energy = value;
                 break;
-            case "speed":
+            case ICDC.StatType.Speed:
                 speed = value;
                 break;
-            case "ispos":
+            case ICDC.StatType.AttackSpeed:
                 attackSpeed = value;
                 break;
-            case "damage":
+            case ICDC.StatType.Damage:
                 damage = value;
                 break;
-            case "sightRange":
+            case ICDC.StatType.SightRange:
                 sightRange = value;
                 break;
-            case "healthRegen":
+            case ICDC.StatType.HealthRegen:
                 healthRegen = value;
                 break;
-            case "energyRegen":
+            case ICDC.StatType.EnergyRegen:
                 energyRegen = value;
-                break;
-                
-            default:
                 break;
         }
     }
