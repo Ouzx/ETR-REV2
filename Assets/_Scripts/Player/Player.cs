@@ -26,7 +26,7 @@ public class Player : MonoBehaviour
 
     [HideInInspector] public Stats stats;
 
-    private void Start()
+    private void Awake()
     {
         stats = GetComponent<Stats>();
     }

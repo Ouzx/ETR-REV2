@@ -8,7 +8,8 @@ public class UIPlayer
         get { return health; }
         set
         {
-            health = value;
+            if (health + value > 0)
+                health += value;
             UpdatePower();
         }
     }
@@ -19,7 +20,8 @@ public class UIPlayer
         get { return energy; }
         set
         {
-            energy = value;
+            if (energy + value > 0)
+                energy += value;
             UpdatePower();
         }
     }
@@ -30,7 +32,8 @@ public class UIPlayer
         get { return speed; }
         set
         {
-            speed = value;
+            if (speed + value > 0)
+                speed += value;
             UpdatePower();
         }
     }
@@ -41,7 +44,8 @@ public class UIPlayer
         get { return attackSpeed; }
         set
         {
-            attackSpeed = value;
+            if (attackSpeed + value > 0)
+                attackSpeed += value;
             UpdatePower();
         }
     }
@@ -52,7 +56,8 @@ public class UIPlayer
         get { return damage; }
         set
         {
-            damage = value;
+            if (damage + value > 0)
+                damage += value;
             UpdatePower();
         }
     }
@@ -63,13 +68,34 @@ public class UIPlayer
         get { return sightRange; }
         set
         {
-            sightRange = value;
+            if (sightRange + value > 0)
+                sightRange += value;
+            UpdatePower();
+        }
+    }
+    [SerializeField] private float healthRegen;
+    public float HealthRegen
+    {
+        get { return healthRegen; }
+        set
+        {
+            if (healthRegen + value > 0)
+                healthRegen += value;
+            UpdatePower();
+        }
+    }
+    [SerializeField] private float energyRegen;
+    public float EnergyRegen
+    {
+        get { return energyRegen; }
+        set
+        {
+            if (energyRegen + value > 0)
+                energyRegen += value;
             UpdatePower();
         }
     }
 
-    public float HealthRegen;
-    public float EnergyRegen;
 
     public float Hungerness { get; set; }
     public float WalkingCost { get; set; }
@@ -77,7 +103,7 @@ public class UIPlayer
     public float HungerCost { get; set; }
 
     public float Power { get; set; }
-    private void UpdatePower()
+    public void UpdatePower()
     {
         float oldPower = Power;
 

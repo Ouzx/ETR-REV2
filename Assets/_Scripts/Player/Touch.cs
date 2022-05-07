@@ -2,15 +2,10 @@
 using UnityEngine;
 public class Touch : MonoBehaviour
 {
-    private Player player;
-    private StateMachine stateMachine;
+    [SerializeField] private Player player;
+    [SerializeField] private StateMachine stateMachine;
 
     private bool isInteracted;
-    private void Start()
-    {
-        player = GetComponent<Player>();
-        stateMachine = GetComponent<StateMachine>();
-    }
 
     public void Interact(Interactable interactable)
     {

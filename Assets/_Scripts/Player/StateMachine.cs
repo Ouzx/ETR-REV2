@@ -14,17 +14,10 @@ public class StateMachine : MonoBehaviour
     }
     private State state = State.Idle;
 
-    private Animator animator;
-
-    private void Start()
-    {
-        animator = GetComponent<Animator>();
-    }
+    [SerializeField] Animator animator;
 
     public void SetState(State _state)
-    {
-        void doAnimation() => animator.SetBool(state.ToString(), true);
-        
+    {        
         if (state == _state)
             return;
 
@@ -33,7 +26,7 @@ public class StateMachine : MonoBehaviour
         Invoke(nameof(doAnimation), .2f);
         
     }
-
+    void doAnimation() => animator.SetBool(state.ToString(), true);
     public State GetState() => state;
     
 }

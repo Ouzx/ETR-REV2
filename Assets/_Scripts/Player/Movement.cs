@@ -16,22 +16,16 @@ public class Movement : MonoBehaviour
     }
 
     [SerializeField] private LayerMask baseLayer;
-    private StatController statController;
-    private StateMachine stateMachine;
-    private NavMeshAgent agent; 
-    private Player player;
-
-    public Action DoWhenAtBase;
+    [SerializeField] private StatController statController;
+    [SerializeField] private StateMachine stateMachine;
+    [SerializeField] private NavMeshAgent agent;
+    [SerializeField] private Player player;
 
     private Vector3 startPosition;
     private Vector3 targetPoint;
 
     private void Start()
     {
-        statController = GetComponent<StatController>();
-        stateMachine = GetComponent<StateMachine>();
-        agent = GetComponent<NavMeshAgent>();
-        player = GetComponent<Player>();
         startPosition = new Vector3();
     }
 
@@ -45,19 +39,19 @@ public class Movement : MonoBehaviour
         {
             targetPoint = point;
 
-            Look(point);
+            //Look(point);
             stateMachine.SetState(StateMachine.State.Walk);
             agent.SetDestination(point);
         }
         return false;
     }
     
-    private void Look(Vector3 target)
-    {
-        Vector3 directon = (target - transform.position).normalized;
-        Quaternion lookRotation = Quaternion.LookRotation(new Vector3(directon.x, 0f, directon.z));
-        transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 50f);
-    }
+    //private void Look(Vector3 target)
+    //{
+    //    Vector3 directon = (target - transform.position).normalized;
+    //    Quaternion lookRotation = Quaternion.LookRotation(new Vector3(directon.x, 0f, directon.z));
+    //    transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 50f);
+    //}
 
     private void StepCheck()
     {
@@ -75,15 +69,7 @@ public class Movement : MonoBehaviour
     {
         bool isBase = Physics.CheckSphere(transform.position, 0.5f, baseLayer);
         if (isBase)
-        {
-            if (DoWhenAtBase != null)
-            {
-                DoWhenAtBase();
-                DoWhenAtBase = null;
-            }
-            
             return Locations.Base;
-        }
         else
             return Locations.Wilderness;
     }

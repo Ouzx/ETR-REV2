@@ -508,6 +508,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06c8f9ca45df04f438b83fec7e3f9ce8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  statType: 0
   increaser: {fileID: 4008943821136529519}
   decreaser: {fileID: 673980676418200012}
   Increasement: 0.5
@@ -625,8 +626,8 @@ MonoBehaviour:
     m_Alignment: 1
     m_AlignByGeometry: 0
     m_RichText: 1
-    m_HorizontalOverflow: 0
-    m_VerticalOverflow: 0
+    m_HorizontalOverflow: 1
+    m_VerticalOverflow: 1
     m_LineSpacing: 1
   m_Text: 123.2
 --- !u!1 &2973489503001024618

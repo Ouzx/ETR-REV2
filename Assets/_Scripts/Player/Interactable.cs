@@ -13,8 +13,8 @@ public class Interactable
 
     }
     public Type type;
-    
-    public Vector3 position
+    private Vector3 position;
+    public Vector3 Position
     {
         get
         {

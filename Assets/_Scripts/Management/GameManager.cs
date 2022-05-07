@@ -16,20 +16,16 @@ public class GameManager : MonoBehaviour
     #endregion
     
     public Clock clock;
-
+    public UIStatUpdater uisu;
     public int EP;
 
     [Space]
     public UIPlayer player = new UIPlayer(); // FILL THIS VIA UIManager USING predefined go.
     public UIPlayer bot = new UIPlayer();     // FILL THIS VIA UIManager USING predefined go.
-   
-    public Action OnUIUpdate;
-    
-    
+
     private void Start()
     {
-        clock = GetComponent<Clock>();
-        OnUIUpdate?.Invoke();
+        uisu.UpdateTexts();
     }
 
     #region Earn / Spend
@@ -37,16 +33,14 @@ public class GameManager : MonoBehaviour
     public void Earn()
     {
         EP ++;
-        OnUIUpdate?.Invoke();
+        uisu.UpdateTexts();
     }
 
-    public bool Spend(int value)
+    public bool Spend()
     {
-        var t = EP - value;
-        if (t >= 0)
+        if (EP > 0)
         {
-            EP = t;
-            OnUIUpdate?.Invoke();
+            EP--;
             return true;
         }
         return false;

@@ -1,18 +1,11 @@
 // Oz
 using UnityEngine;
-
+using UnityEngine.AI;
 public class LookAround : MonoBehaviour
 {
-    private Player player;
-    private Touch touch;
-    [SerializeField] private LayerMask PlayerLayer, FoodLayer, BushLayer;
-
-    private void Start()
-    {
-        player = GetComponent<Player>();
-        touch = GetComponent<Touch>();
-    }
-
+    [SerializeField] private Player player;
+    [SerializeField] private Touch touch;
+    [SerializeField] private LayerMask PlayerLayer, FoodLayer, BushLayer, BaseLayer, Walkable;
 
     public Interactable Search()
     {
@@ -32,13 +25,13 @@ public class LookAround : MonoBehaviour
             }
             else
             {
-                interactable.position = GetRandomBasePoint();
+                interactable.Position = GetRandomBasePoint();
                 interactable.type = Interactable.Type.None;
             }
         }
         else if (!player.stats.GetIsHungry())
         {
-            interactable.position = GetRandomBasePoint();
+            interactable.Position = GetRandomBasePoint();
             interactable.type = Interactable.Type.ToBase;
         }
         else if (foods.Length != 0)
@@ -57,7 +50,7 @@ public class LookAround : MonoBehaviour
         }
         else
         {
-            interactable.position = GetRandomPoint();
+            interactable.Position = GetRandomPoint();
             interactable.type = Interactable.Type.None;
         }
         return interactable;
@@ -65,12 +58,28 @@ public class LookAround : MonoBehaviour
 
     public Vector3 GetRandomBasePoint()
     {
-        return transform.position;
+        Vector3 randomDirection = Random.insideUnitSphere * 5;
+
+        randomDirection += transform.position;
+
+        NavMeshHit navHit;
+
+        NavMesh.SamplePosition(randomDirection, out navHit, 5, BaseLayer);
+
+        return navHit.position;
     }
 
     private Vector3 GetRandomPoint()
     {
-        return transform.position;
+        Vector3 randomDirection = Random.insideUnitSphere * 5;
+
+        randomDirection += transform.position;
+
+        NavMeshHit navHit;
+
+        NavMesh.SamplePosition(randomDirection, out navHit, 5, Walkable);
+
+        return navHit.position;
     }
 
     private Transform GetNearestTarget(Collider[] targets)

@@ -21,32 +21,27 @@ public class ICDC : MonoBehaviour
     GameManager gameManager;
 
     [SerializeField] private float Increasement = .5f;
-    int level = 0;
-    int cost = 1;
+
 
     private void Start()
     {
         gameManager = GameManager.instance;
-        increaser.onClick.AddListener(() => {
-            level++;
-            if (gameManager.Spend(cost))
+        increaser.onClick.AddListener(() =>
+        {
+            if (gameManager.Spend())
             {
                 gameManager.player.Setter(statType, Increasement);
-               //IncreaseCost();
+                gameManager.uisu.UpdateTexts();
             }
         });
-        
+
         decreaser.onClick.AddListener(() =>
         {
-            level--;
-            if (gameManager.Spend(cost))
+            if (gameManager.Spend())
             {
                 gameManager.player.Setter(statType, -Increasement);
-                //IncreaseCost();
+                gameManager.uisu.UpdateTexts();
             }
         });
     }
-    
-    // Uncomment if needed
-    // void IncreaseCost() => cost = System.Convert.ToInt32(Mathf.Pow(1.2f, level));
 }

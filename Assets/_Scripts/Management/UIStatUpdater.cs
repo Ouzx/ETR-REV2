@@ -4,23 +4,19 @@ using UnityEngine.UI;
 public class UIStatUpdater : MonoBehaviour
 {
     public Text[] texts;
-    GameManager gm;
-    void Start()
+  
+    public void UpdateTexts()
     {
-        gm = GameManager.instance;
-        gm.OnUIUpdate += UpdateTexts;
-    }
-    void UpdateTexts()
-    {
-        texts[0].text = gm.player.Health.ToString();
-        texts[1].text = gm.player.Energy.ToString();
-        texts[2].text = gm.player.Speed.ToString();
-        texts[3].text = gm.player.AttackSpeed.ToString();
-        texts[4].text = gm.player.Damage.ToString();
-        texts[5].text = gm.player.SightRange.ToString();
-        texts[6].text = gm.player.HealthRegen.ToString();
-        texts[7].text = gm.player.EnergyRegen.ToString();
-        texts[8].text = gm.player.Power.ToString();
-        texts[9].text = gm.EP.ToString();
+        GameManager.instance.player.UpdatePower();
+        texts[0].text = GameManager.instance.player.Health.ToString();
+        texts[1].text = GameManager.instance.player.Energy.ToString();
+        texts[2].text = GameManager.instance.player.Speed.ToString();
+        texts[3].text = GameManager.instance.player.AttackSpeed.ToString();
+        texts[4].text = GameManager.instance.player.Damage.ToString();
+        texts[5].text = GameManager.instance.player.SightRange.ToString();
+        texts[6].text = GameManager.instance.player.HealthRegen.ToString();
+        texts[7].text = GameManager.instance.player.EnergyRegen.ToString();
+        texts[8].text = GameManager.instance.player.Power.ToString();
+        texts[9].text = GameManager.instance.EP.ToString();
     }
 }

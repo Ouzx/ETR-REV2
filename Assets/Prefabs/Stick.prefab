@@ -43,6 +43,7 @@ GameObject:
   m_Component:
   - component: {fileID: 631380166593808340}
   - component: {fileID: 254677980213501295}
+  - component: {fileID: 1311093997016646484}
   - component: {fileID: 254677980213501280}
   - component: {fileID: 245433795}
   - component: {fileID: 245433796}
@@ -93,6 +94,28 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!195 &1311093997016646484
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 254677980213501294}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 0
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
 --- !u!114 &254677980213501280
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -105,6 +128,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7befc48fe11ccc0488c2d90bdd10a9af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  animator: {fileID: 254677980213501295}
 --- !u!114 &245433795
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -132,6 +156,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 972970e55bfedc449b581728ead05db0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  stats: {fileID: 245433801}
 --- !u!114 &245433797
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -144,6 +169,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35a51c1c8bde28d44afacf5f4b94e2e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: {fileID: 245433795}
+  touch: {fileID: 245433799}
   PlayerLayer:
     serializedVersion: 2
     m_Bits: 256
@@ -168,6 +195,10 @@ MonoBehaviour:
   baseLayer:
     serializedVersion: 2
     m_Bits: 6144
+  statController: {fileID: 245433796}
+  stateMachine: {fileID: 254677980213501280}
+  agent: {fileID: 1311093997016646484}
+  player: {fileID: 245433795}
 --- !u!114 &245433799
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -180,6 +211,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f3f360ddd163b1449430d90cce23330, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: {fileID: 245433795}
+  stateMachine: {fileID: 254677980213501280}
 --- !u!114 &245433800
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -192,6 +225,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 531e2d79080c7c0418c2d87fa208f484, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  statController: {fileID: 245433796}
+  stateMachine: {fileID: 254677980213501280}
+  lookAround: {fileID: 245433797}
+  movement: {fileID: 245433798}
+  player: {fileID: 245433795}
+  touch: {fileID: 245433799}
 --- !u!114 &245433801
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -204,11 +243,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5c1fdc5e7941f840a0a8ea514ebea85, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 100
-  energy: 100
-  hungerness: 10
-  isHungry: 1
-  attackRange: 1
+  player:
+    health: 0
+    energy: 0
+    speed: 0
+    attackSpeed: 0
+    damage: 0
+    sightRange: 0
+    HealthRegen: 0
+    EnergyRegen: 0
 --- !u!1 &961105019416420985
 GameObject:
   m_ObjectHideFlags: 0

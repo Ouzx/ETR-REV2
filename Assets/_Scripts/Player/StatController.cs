@@ -3,12 +3,10 @@ using UnityEngine;
 
 public class StatController : MonoBehaviour
 {
-    private Stats stats;
+    [SerializeField] private Stats stats;
 
     private void Start()
     {
-        stats = GetComponent<Stats>();
-
         GameManager.instance.clock.OnTick += Regen;
     }
 

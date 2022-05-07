@@ -4,26 +4,21 @@ using UnityEngine;
 
 public class Motor : MonoBehaviour
 {
-    private StatController statController;
-    private StateMachine stateMachine;
-    private LookAround lookAround;
-    private Movement movement;
-    private Player player;
-    private Touch touch;
+    [SerializeField] private StatController statController;
+    [SerializeField] private StateMachine stateMachine;
+    [SerializeField] private LookAround lookAround;
+    [SerializeField] private Movement movement;
+    [SerializeField] private Player player;
+    [SerializeField] private Touch touch;
+
+    System.Action DoWhenAtBase;
 
     private void Start()
     {
-        touch = GetComponent<Touch>();
-        player = GetComponent<Player>();
-        movement = GetComponent<Movement>();
-        lookAround = GetComponent<LookAround>();
-        stateMachine = GetComponent<StateMachine>();
-        statController = GetComponent<StatController>();
-
         player.stats.DoWhenDied += Die;
 
         GameManager.instance.clock.OnDawn += OnDawn;
-        GameManager.instance.clock.OnSunset += Sleep;      
+        GameManager.instance.clock.OnSunset += Sleep;
 
         StartCoroutine(Decide());
     }
@@ -34,23 +29,32 @@ public class Motor : MonoBehaviour
             if (player.state == Player.PlayerState.Awake)
             {
                 Interactable target = lookAround.Search();
-                bool isArrived = movement.Walk(target.position);
+                bool isArrived = movement.Walk(target.Position);
 
                 if (target.type == Interactable.Type.ToBase)
                 {
                     if (isArrived)
+                    {
                         stateMachine.SetState(StateMachine.State.Idle);
+                        if (DoWhenAtBase != null)
+                        {
+                            DoWhenAtBase();
+                            DoWhenAtBase = null;
+                        }
+
+                    }
                 }
                 else if (isArrived)
                     touch.Interact(target);
-                
+
             }
             yield return new WaitForEndOfFrame();
         }
     }
     public void OnDawn()
     {
-        if(movement.WhereAmI() == Movement.Locations.Base){
+        if (movement.WhereAmI() == Movement.Locations.Base)
+        {
             if (!player.stats.GetIsHungry())
             {
                 statController.Reproduce(lookAround.GetRandomBasePoint());
@@ -62,12 +66,11 @@ public class Motor : MonoBehaviour
         }
     }
 
-    // TODO: Bu kisimda whereami dowhenatbase i zaten fire ediyor. Burada sorun cikabilir?
     public void OnSunset()
     {
         if (movement.WhereAmI() == Movement.Locations.Wilderness)
         {
-            movement.DoWhenAtBase += Sleep;
+            DoWhenAtBase += Sleep;
         }
         else Sleep();
     }
@@ -77,27 +80,27 @@ public class Motor : MonoBehaviour
         player.state = Player.PlayerState.Sleep;
         stateMachine.SetState(StateMachine.State.Sleep);
 
-        if (movement.DoWhenAtBase != null)
-            movement.DoWhenAtBase -= Sleep;
+        if (DoWhenAtBase != null)
+            DoWhenAtBase -= Sleep;
     }
 
     private void Die()
     {
         StopCoroutine(Decide());
-        
+
         stateMachine.SetState(StateMachine.State.Death);
-        
+
         void DestroySelf() => Destroy(gameObject);
 
         Invoke(nameof(DestroySelf), 5f);
     }
 
-    
+
 
     private void OnDestroy()
     {
         GameManager.instance.clock.OnDawn -= OnDawn;
-        GameManager.instance.clock.OnSunset -= OnSunset;      
+        GameManager.instance.clock.OnSunset -= OnSunset;
     }
 
 }
