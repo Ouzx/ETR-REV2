@@ -11,7 +11,7 @@ public class UIPlayer
             UpdatePower();
         }
     }
-    public float _energy;
+    private float _energy;
     public float energy
     {
         get { return _energy; }
@@ -22,8 +22,8 @@ public class UIPlayer
         }
     }
     public float hungerness { get; set; }
-    
-    public float _speed;
+
+    private float _speed;
     public float speed
     {
         get { return _speed; }
@@ -33,7 +33,7 @@ public class UIPlayer
             UpdatePower();
         }
     }
-    public float _attackSpeed;
+    private float _attackSpeed;
     public float attackSpeed
     {
         get { return _attackSpeed; }
@@ -43,8 +43,8 @@ public class UIPlayer
             UpdatePower();
         }
     }
-    
-    public float _damage;
+
+    private float _damage;
     public float damage
     {
         get { return _damage; }
@@ -55,7 +55,7 @@ public class UIPlayer
         }
     }
 
-    public float _sightRange;
+    private float _sightRange;
     public float sightRange
     {
         get { return _sightRange; }
