@@ -16,6 +16,7 @@ public class GameManager : MonoBehaviour
     #endregion
 
     public Clock clock;
+    public float timeLapse = 1f;
     public UIStatUpdater uisu;
     public int EP;
 

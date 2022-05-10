@@ -11,9 +11,13 @@ PrefabInstance:
       propertyPath: playerType
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 245433796, guid: 60daea2b1235a80479140d8f07a64fe6, type: 3}
+      propertyPath: PlayerPrefab
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 245433797, guid: 60daea2b1235a80479140d8f07a64fe6, type: 3}
       propertyPath: PlayerLayer.m_Bits
-      value: 512
+      value: 256
       objectReference: {fileID: 0}
     - target: {fileID: 245433798, guid: 60daea2b1235a80479140d8f07a64fe6, type: 3}
       propertyPath: baseLayer.m_Bits

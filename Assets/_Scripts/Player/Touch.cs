@@ -31,7 +31,7 @@ public class Touch : MonoBehaviour
             interactable.transform.GetComponent<Player>().TakeDamage(player.stats.GetDamage());
             GetComponent<StatController>().CastAttack();
             isInteracted = true;
-            Invoke(nameof(ResetInteract), player.stats.GetAttackSpeed());
+            Invoke(nameof(ResetInteract), player.stats.GetAttackSpeed()); // Animation does not react attack speed but backend does react attack speed
         }
     }
 
@@ -43,12 +43,15 @@ public class Touch : MonoBehaviour
             stateMachine.SetState(StateMachine.State.Eat);
             player.Eat(interactable.transform.GetComponent<Eatable>().GetBite());
             isInteracted = true;
-            Invoke(nameof(ResetInteract), 1000 / player.stats.GetAttackSpeed());
+            Invoke(nameof(ResetInteract), 1000 / (player.stats.GetAttackSpeed() * 1000));
         }
     }
 
     // If I am stronger; return true;
     public bool ComparePowers(Transform _enemy) => player.stats.GetPower() > _enemy.GetComponent<Player>().stats.GetPower();
 
-    void ResetInteract() => isInteracted = false;
+    void ResetInteract()
+    {
+        isInteracted = false;
+    }
 }

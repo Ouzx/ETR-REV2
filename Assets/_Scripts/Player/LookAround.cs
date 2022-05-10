@@ -49,7 +49,7 @@ public class LookAround : MonoBehaviour
         else if (bushes.Length != 0)
         {
             GameManager.instance.Print(player.name, "I can't see anything but bushes! I'll go there.");
-            Transform bush = GetNearestTarget(bushes);
+            Transform bush = GetRandomTarget(bushes);
 
             interactable.transform = bush.transform;
             interactable.type = Interactable.Type.Bush;
@@ -92,5 +92,11 @@ public class LookAround : MonoBehaviour
             }
         }
         return target;
+    }
+
+    private Transform GetRandomTarget(Collider[] targets)
+    {
+        // select random target and return
+        return targets[Random.Range(0, targets.Length)].transform;
     }
 }

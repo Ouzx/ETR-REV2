@@ -10,8 +10,6 @@ public class Clock : MonoBehaviour
     private const int DAY = 24;
     private const int DAWN = 6;
     private const int SUNSET = 20;
-    private const int HOUR = 60;
-    private const int MINUTE = 60;
     
     public enum DayState
     {
@@ -23,66 +21,41 @@ public class Clock : MonoBehaviour
 
     private int day = 0;
     private int hour = 6;
-    private int minute = 0;
-    private int second = 0;
 
     public Action OnDawn;
     public Action OnSunset;
     public Action OnTick;
     
     public bool clockState = false;
-    private bool  setHour, setDay, setDawn = true, setSunset;
-    public void StartTick() => InvokeRepeating(nameof(Tick), 0, 0.0001f);
+    public void StartTick() => InvokeRepeating(nameof(Tick), 0, GameManager.instance.timeLapse);
 
     private void Tick()
     {
         if (!clockState) return;
 
-        if (second == MINUTE)
-        {
-            minute++;
-            second = 0;
-            setHour = true;
-        }
-
-        if (minute == HOUR && setHour)
-        {
-            hour++;
-            minute = 0;
-            
-            setHour = false;
-            setDay = true;
-            setDawn = true;
-            setSunset = true;
-        }
-
-        if (hour == DAY && setDay)
+        if (hour == DAY)
         {
             day++;
             hour = 0;
-            setDay = false;
         }
 
-        if (hour == DAWN && setDawn)
+        if (hour == DAWN)
         {
             dayState = DayState.Day;
-            OnDawn();
-            setDawn = false;
+            OnDawn?.Invoke();
         }
 
-        if (hour == SUNSET && setSunset )
+        if (hour == SUNSET)
         {
             dayState = DayState.Night;
-            OnSunset();
-            setSunset = false;
+            OnSunset?.Invoke();
         }
-        OnTick();
-        second++;
-
+        OnTick?.Invoke();
+        hour++;
         clockText.text = $"{GetDay()} // {GetTime()}";
     }
 
-    public string GetTime() => hour.ToString("00") + ":" + minute.ToString("00") /*+ ":" + second.ToString("00")*/;
+    public string GetTime() => hour.ToString("00") + ":" + "00";
 
     public string GetDay() => day.ToString("00");
 

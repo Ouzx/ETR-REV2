@@ -14,6 +14,11 @@ public class Stats : MonoBehaviour
                                                         GameManager.instance.player :
                                                         GameManager.instance.bot;
         GameManager.instance.bot.UpdatePower();
+        
+        SetHealth(player.Health);
+        SetEnergy(player.Energy);
+        SetHungeress(0);
+        SetIsHungry(true);
     }
 
     #region NAME
@@ -38,7 +43,7 @@ public class Stats : MonoBehaviour
         if (tempHealth < 0)
         {
             this.health = 0;
-            DoWhenDied();
+            DoWhenDied?.Invoke();
         }
         if (tempHealth < player.Health)
             this.health = tempHealth;

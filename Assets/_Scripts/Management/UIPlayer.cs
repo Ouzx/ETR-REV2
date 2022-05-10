@@ -96,11 +96,17 @@ public class UIPlayer
         }
     }
 
+    [SerializeField] private float hungerness;
+    public float Hungerness { get { return hungerness; } set { hungerness = value; } }
 
-    public float Hungerness { get; set; }
-    public float WalkingCost { get; set; }
-    public float AttackingCost { get; set; }
-    public float HungerCost { get; set; }
+    [SerializeField] private float walkingCost;
+    public float WalkingCost { get { return walkingCost; } set { walkingCost = value; } }
+
+    [SerializeField] private float attackingCost;
+    public float AttackingCost { get { return attackingCost; } set { attackingCost = value; } }
+
+    [SerializeField] private float hungerCost;
+    public float HungerCost { get { return hungerCost; } set { hungerCost = value; } }
 
     public float Power { get; set; }
     public void UpdatePower()
@@ -114,15 +120,17 @@ public class UIPlayer
                 AttackSpeed +
                 SightRange;
 
-        float powerDifference = Power / oldPower;
+        //float powerDifference = Power / oldPower;
+        //if (powerDifference != 0)
+        //{
+        //    // STATS
+        //    Hungerness *= powerDifference;
 
-        // STATS
-        Hungerness *= powerDifference;
-
-        // COSTS
-        WalkingCost *= powerDifference;
-        AttackingCost *= powerDifference;
-        HungerCost *= powerDifference;
+        //    // COSTS
+        //    WalkingCost *= powerDifference;
+        //    AttackingCost *= powerDifference;
+        //    HungerCost *= powerDifference;
+        //}
     }
 
     public void Setter(ICDC.StatType statType, float value)

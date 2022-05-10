@@ -29,20 +29,21 @@ public class Movement : MonoBehaviour
 
     public bool Walk(Vector3 point)
     {
+        //agent.stoppingDistance = 0;
         agent.stoppingDistance = player.stats.GetAttackRange();
         agent.speed = player.stats.GetSpeed(); // TODO: SPEED OR ACCELERATION?
         //agent.SetDestination(point);
-        if (point != null)
+        if (!IsArrived(point))
         {
-            GameManager.instance.Print(player.name, " is walking to " + point);
+            //GameManager.instance.Print(player.name, " is walking to " + point);
             StepCheck();
             stateMachine.SetState(StateMachine.State.Walk);
             agent.SetDestination(point);
         }
 
-        if (IsArrived())
+        else 
         {
-            GameManager.instance.Print(player.name, " is at position:  " + point);
+            //GameManager.instance.Print(player.name, " is at position:  " + point);
             //stateMachine.SetState(StateMachine.State.Idle);
             return true;
         }
@@ -61,28 +62,25 @@ public class Movement : MonoBehaviour
             startPosition = transform.position;
         }
     }
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.tag.Equals("Fred Base") && player.playerType == Player.PlayerType.Player)
-        {
-            location = Locations.Base;
-        }
-        else if (other.tag.Equals("Barney Base") && player.playerType == Player.PlayerType.Bot)
-        {
-            location = Locations.Base;
-        }
-    }
     public Locations WhereAmI()
     {
+        if (player.playerType == Player.PlayerType.Player)
+        {
+            if (transform.position.z < -170) location = Locations.Base;
+            else location = Locations.Wilderness;
+        }
+        else if (transform.position.z > -86) location = Locations.Base;
+        else location = Locations.Wilderness;
+        
         GameManager.instance.Print(player.name, " is at location: " + location);
         return location;
     }
 
-    public bool IsArrived()
+    public bool IsArrived(Vector3 point)
     {
-        float dist = agent.remainingDistance;
-        return (dist != Mathf.Infinity && agent.pathStatus == NavMeshPathStatus.PathComplete && agent.remainingDistance <= player.stats.GetAttackRange());
-
+        //float dist = agent.remainingDistance;
+        //return (dist != Mathf.Infinity && agent.pathStatus == NavMeshPathStatus.PathComplete && agent.remainingDistance <= player.stats.GetAttackRange());
+        return (transform.position - point).magnitude <= player.stats.GetAttackRange();
     }
 
     private float GetDistance(Vector3 point) => Vector3.Distance(transform.position, point);
