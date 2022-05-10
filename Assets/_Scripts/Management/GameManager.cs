@@ -24,6 +24,10 @@ public class GameManager : MonoBehaviour
     public UIPlayer player = new UIPlayer(); // FILL THIS VIA UIManager USING predefined go.
     public UIPlayer bot = new UIPlayer();     // FILL THIS VIA UIManager USING predefined go.
 
+    [Space]
+    [SerializeField] private GameObject FredContainer;
+    [SerializeField] private GameObject BarneyContainer;
+
     private void Start()
     {
         uisu.UpdateTexts();
@@ -50,11 +54,23 @@ public class GameManager : MonoBehaviour
 
     #endregion
 
-    [SerializeField] private bool debug = true;
-    public void Print(string playerName, string s)
-    {
-        if (!debug) return;
+    //[SerializeField] private bool debug = true;
+    //public void Print(string playerName, string s)
+    //{
+    //    if (!debug) return;
 
-        Debug.Log(playerName + "/     " + s);
+    //    Debug.Log(playerName + "/     " + s);
+    //}
+
+    public void CheckStatus()
+    {
+        if (BarneyContainer.transform.childCount == 0)
+        {
+            UIManager.instance.WinFred();
+        }
+        else if (FredContainer.transform.childCount == 0)
+        {
+            UIManager.instance.WinBarney();
+        }
     }
 }

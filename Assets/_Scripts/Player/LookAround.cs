@@ -8,39 +8,49 @@ public class LookAround : MonoBehaviour
     [SerializeField] private LayerMask PlayerLayer, FoodLayer, BushLayer, GroundLayer;
     public Interactable Search()
     {
-        GameManager.instance.Print(player.name, "Looking around...");
+       // GameManager.instance.Print(player.name, "Looking around...");
         Interactable interactable = new Interactable();
-        // collider ekle
+        
+        Collider[] enemies_to_Attack = Physics.OverlapSphere(transform.position, player.stats.GetAttackRange(), PlayerLayer, QueryTriggerInteraction.Ignore);
+       
         Collider[] enemies = Physics.OverlapSphere(transform.position, player.stats.GetSightRange(), PlayerLayer, QueryTriggerInteraction.Ignore);
         Collider[] foods = Physics.OverlapSphere(transform.position, player.stats.GetSightRange(), FoodLayer, QueryTriggerInteraction.Ignore);
         Collider[] bushes = Physics.OverlapSphere(transform.position, player.stats.GetSightRange(), BushLayer, QueryTriggerInteraction.Ignore);
-        GameManager.instance.Print(player.name, "Found " + enemies.Length + " enemies, " + foods.Length + " foods, and " + bushes.Length + " bushes.");
-        if (enemies.Length != 0)
+        // GameManager.instance.Print(player.name, "Found " + enemies.Length + " enemies, " + foods.Length + " foods, and " + bushes.Length + " bushes.");
+
+        if (enemies_to_Attack.Length > 0)
+        {
+            Transform enemy = GetNearestTarget(enemies_to_Attack);
+            interactable.transform = enemy;
+            interactable.type = Interactable.Type.Enemy;
+        }
+
+        else if (enemies.Length != 0)
         {
             Transform enemy = GetNearestTarget(enemies);
-            GameManager.instance.Print(player.name, "Found enemy: " + enemy.name + ". Comparing powers...");
+            //GameManager.instance.Print(player.name, "Found enemy: " + enemy.name + ". Comparing powers...");
             if (touch.ComparePowers(enemy))
             {
-                GameManager.instance.Print(player.name, "I'm stronger than " + enemy.name + "! I'll attack!");
+                //GameManager.instance.Print(player.name, "I'm stronger than " + enemy.name + "! I'll attack!");
                 interactable.transform = enemy;
                 interactable.type = Interactable.Type.Enemy;
             }
             else
             {
-                GameManager.instance.Print(player.name, "I'm weaker than " + enemy.name + "! I'll flee!");
+                //GameManager.instance.Print(player.name, "I'm weaker than " + enemy.name + "! I'll flee!");
                 interactable.Position = GetRandomBasePoint();
                 interactable.type = Interactable.Type.None;
             }
         }
         else if (!player.stats.GetIsHungry())
         {
-            GameManager.instance.Print(player.name, "I'm not hungry! I'll go back to base!");
+            // GameManager.instance.Print(player.name, "I'm not hungry! I'll go back to base!");
             interactable.Position = GetRandomBasePoint();
             interactable.type = Interactable.Type.ToBase;
         }
         else if (foods.Length != 0)
         {
-            GameManager.instance.Print(player.name, "I'm hungry and Found food! I'll eat it!");
+            //GameManager.instance.Print(player.name, "I'm hungry and Found food! I'll eat it!");
             Transform food = GetNearestTarget(foods);
 
             interactable.transform = food.transform;
@@ -48,7 +58,7 @@ public class LookAround : MonoBehaviour
         }
         else if (bushes.Length != 0)
         {
-            GameManager.instance.Print(player.name, "I can't see anything but bushes! I'll go there.");
+            //GameManager.instance.Print(player.name, "I can't see anything but bushes! I'll go there.");
             Transform bush = GetRandomTarget(bushes);
 
             interactable.transform = bush.transform;
@@ -56,7 +66,7 @@ public class LookAround : MonoBehaviour
         }
         else
         {
-            GameManager.instance.Print(player.name, "I can't see anything! I'll go randomly.");
+            //GameManager.instance.Print(player.name, "I can't see anything! I'll go randomly.");
             interactable.Position = GetRandomPoint();
             interactable.type = Interactable.Type.None;
         }
@@ -68,12 +78,12 @@ public class LookAround : MonoBehaviour
     private Vector3 GetRandomPoint()
     {
         float walkPointRange = player.stats.GetSightRange();
-        
+
         float randomZ = Random.Range(-walkPointRange, walkPointRange);
         float randomX = Random.Range(-walkPointRange, walkPointRange);
-        
+
         Vector3 walkPoint = new Vector3(transform.position.x + randomX, transform.position.y, transform.position.z + randomZ);
-        
+
         if (Physics.Raycast(walkPoint, -transform.up, 2, GroundLayer, QueryTriggerInteraction.Ignore))
             return walkPoint;
         else

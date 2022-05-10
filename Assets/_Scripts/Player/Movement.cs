@@ -71,8 +71,8 @@ public class Movement : MonoBehaviour
         }
         else if (transform.position.z > -86) location = Locations.Base;
         else location = Locations.Wilderness;
-        
-        GameManager.instance.Print(player.name, " is at location: " + location);
+
+        // GameManager.instance.Print(player.name, " is at location: " + location);
         return location;
     }
 

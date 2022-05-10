@@ -5,7 +5,7 @@ public class StatController : MonoBehaviour
 {
     [SerializeField] private Stats stats;
     [SerializeField] private Player player;
-    [SerializeField] private GameObject FredPrefab, BarneyPrefab;
+    [SerializeField] private GameObject PlayerPrefab;
     private void Start()
     {
         GameManager.instance.clock.OnTick += Regen;
@@ -27,7 +27,6 @@ public class StatController : MonoBehaviour
 
     public void Reproduce(Vector3 pos)
     {
-        GameObject PlayerPrefab = player.playerType == Player.PlayerType.Player ? FredPrefab : BarneyPrefab;
         GameObject child = Instantiate(PlayerPrefab, pos, Quaternion.identity, transform.parent);
         child.GetComponent<Player>().stats.SetIsHungry(true);
     }

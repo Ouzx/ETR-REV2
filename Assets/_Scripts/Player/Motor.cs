@@ -22,14 +22,14 @@ public class Motor : MonoBehaviour
 
         GameManager.instance.clock.OnDawn += OnDawn;
         GameManager.instance.clock.OnSunset += OnSunset;
-        GameManager.instance.Print(player.name, "Player created");
+        //GameManager.instance.Print(player.name, "Player created");
         StartCoroutine(Decide());
     }
     public IEnumerator Decide()
     {
         while (true)
         {
-            GameManager.instance.Print(player.name,"Player State: " + player.state);
+            // GameManager.instance.Print(player.name,"Player State: " + player.state);
             if (player.state == Player.PlayerState.Awake  && !dailyTODO)
             {
                 Interactable target = lookAround.Search();
@@ -37,10 +37,10 @@ public class Motor : MonoBehaviour
 
                 if (target.type == Interactable.Type.ToBase)
                 {
-                    GameManager.instance.Print(player.name, "I headed to base");
+                    //  GameManager.instance.Print(player.name, "I headed to base");
                     if (isArrived && transform.position == target.Position)
                     {
-                        GameManager.instance.Print(player.name, "I arrived at base");
+                        //    GameManager.instance.Print(player.name, "I arrived at base");
                         stateMachine.SetState(StateMachine.State.Idle);
                         if (DoWhenAtBase != null)
                         {
@@ -53,7 +53,7 @@ public class Motor : MonoBehaviour
                 }
                 else if (isArrived)
                 {
-                    GameManager.instance.Print(player.name, "I arrived my interaction: " + target.Position); 
+                    //GameManager.instance.Print(player.name, "I arrived my interaction: " + target.Position); 
                     touch.Interact(target);
                 }
             }
@@ -67,7 +67,7 @@ public class Motor : MonoBehaviour
         {
             if (!player.stats.GetIsHungry() && sleptYesterday)
             {
-                GameManager.instance.Print(player.name, "I ate something yesterday, I'll reproduce today.");
+                //GameManager.instance.Print(player.name, "I ate something yesterday, I'll reproduce today.");
                 statController.Reproduce(lookAround.GetRandomBasePoint());
                 sleptYesterday = false;
             }
@@ -94,7 +94,7 @@ public class Motor : MonoBehaviour
     {
         if (Clock.GetDayState() == Clock.DayState.Night)
         {
-            GameManager.instance.Print(player.name, "I'm sleeping");
+            // GameManager.instance.Print(player.name, "I'm sleeping");
             player.state = Player.PlayerState.Sleep;
             stateMachine.SetState(StateMachine.State.Sleep);
             sleptYesterday = true;
@@ -103,7 +103,7 @@ public class Motor : MonoBehaviour
 
     private void Die()
     {
-        GameManager.instance.Print(player.name, "I died");
+        //GameManager.instance.Print(player.name, "I died");
         StopCoroutine(Decide());
 
         stateMachine.SetState(StateMachine.State.Death);

@@ -44,6 +44,7 @@ public class Stats : MonoBehaviour
         {
             this.health = 0;
             DoWhenDied?.Invoke();
+            GameManager.instance.CheckStatus();
         }
         if (tempHealth < player.Health)
             this.health = tempHealth;

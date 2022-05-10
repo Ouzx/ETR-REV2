@@ -52,6 +52,7 @@ GameObject:
   - component: {fileID: 245433799}
   - component: {fileID: 245433800}
   - component: {fileID: 245433801}
+  - component: {fileID: 5050639275493820071}
   m_Layer: 0
   m_Name: Stick
   m_TagString: Untagged
@@ -158,8 +159,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stats: {fileID: 245433801}
   player: {fileID: 245433795}
-  FredPrefab: {fileID: 4030941052417992014, guid: 566687b665743d848831b9cac5ba4337, type: 3}
-  BarneyPrefab: {fileID: 942851494272011701, guid: 15f5bcee012a83848b4c113d4b5bdbec, type: 3}
+  PlayerPrefab: {fileID: 0}
 --- !u!114 &245433797
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -259,6 +259,20 @@ MonoBehaviour:
     walkingCost: 0
     attackingCost: 0
     hungerCost: 0
+--- !u!136 &5050639275493820071
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 254677980213501294}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 1.3260546
+  m_Height: 7.1743994
+  m_Direction: 1
+  m_Center: {x: -0.18006533, y: 3.087199, z: 0}
 --- !u!1 &961105019416420985
 GameObject:
   m_ObjectHideFlags: 0
