@@ -30,7 +30,7 @@ public class Motor : MonoBehaviour
         while (true)
         {
             // GameManager.instance.Print(player.name,"Player State: " + player.state);
-            if (player.state == Player.PlayerState.Awake  && !dailyTODO)
+            if (player.state == Player.PlayerState.Awake && !dailyTODO)
             {
                 Interactable target = lookAround.Search();
                 bool isArrived = movement.Walk(target.Position);
@@ -60,7 +60,7 @@ public class Motor : MonoBehaviour
             yield return new WaitForEndOfFrame();
         }
     }
-    
+
     public void OnDawn()
     {
         if (movement.WhereAmI() == Movement.Locations.Base)
@@ -111,7 +111,14 @@ public class Motor : MonoBehaviour
 
         Invoke(nameof(DestroySelf), 5f);
     }
-    void DestroySelf() => Destroy(gameObject);
+    void DestroySelf()
+    {
+        if (player.playerType == Player.PlayerType.Player)
+            GameManager.instance.CheckFred();
+        else
+            GameManager.instance.CheckBarney();
+        Destroy(gameObject);
+    }
 
 
 

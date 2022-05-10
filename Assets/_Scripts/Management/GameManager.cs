@@ -62,15 +62,19 @@ public class GameManager : MonoBehaviour
     //    Debug.Log(playerName + "/     " + s);
     //}
 
-    public void CheckStatus()
+    public void CheckBarney()
     {
-        if (BarneyContainer.transform.childCount == 0)
+        if (BarneyContainer.transform.childCount == 1)
         {
             UIManager.instance.WinFred();
         }
-        else if (FredContainer.transform.childCount == 0)
+    }
+
+    public void CheckFred()
+    {
+        if (FredContainer.transform.childCount == 1)
         {
-            UIManager.instance.WinBarney();
+            UIManager.instance.WinFred();
         }
     }
 }

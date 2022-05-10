@@ -44,7 +44,6 @@ public class Stats : MonoBehaviour
         {
             this.health = 0;
             DoWhenDied?.Invoke();
-            GameManager.instance.CheckStatus();
         }
         if (tempHealth < player.Health)
             this.health = tempHealth;
@@ -119,15 +118,5 @@ public class Stats : MonoBehaviour
     public float GetAttackRange() => attackRange;
 
     #endregion
-
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.black;
-        //UnityEditor.Handles.DrawWireDisc(transform.position, transform.up, GetSightRange());
-        Gizmos.DrawWireSphere(transform.position, GetSightRange());
-        Gizmos.color = Color.red;
-        //UnityEditor.Handles.DrawWireDisc(transform.position, transform.up, GetAttackRange());
-        Gizmos.DrawWireSphere(transform.position, GetAttackRange());
-    }
 
 }
