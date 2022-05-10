@@ -14,7 +14,7 @@ public class GameManager : MonoBehaviour
         instance = this;
     }
     #endregion
-    
+
     public Clock clock;
     public UIStatUpdater uisu;
     public int EP;
@@ -26,13 +26,14 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         uisu.UpdateTexts();
+        clock.StartTick();
     }
 
     #region Earn / Spend
 
     public void Earn()
     {
-        EP ++;
+        EP++;
         uisu.UpdateTexts();
     }
 
@@ -48,4 +49,11 @@ public class GameManager : MonoBehaviour
 
     #endregion
 
+    [SerializeField] private bool debug = true;
+    public void Print(string playerName, string s)
+    {
+        if (!debug) return;
+
+        Debug.Log(playerName + "/     " + s);
+    }
 }

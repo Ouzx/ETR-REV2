@@ -52,6 +52,7 @@ GameObject:
   - component: {fileID: 245433799}
   - component: {fileID: 245433800}
   - component: {fileID: 245433801}
+  - component: {fileID: 1668943034463940921}
   m_Layer: 0
   m_Name: Stick
   m_TagString: Untagged
@@ -108,7 +109,7 @@ NavMeshAgent:
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
-  m_StoppingDistance: 0
+  m_StoppingDistance: 5
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
@@ -180,6 +181,9 @@ MonoBehaviour:
   BushLayer:
     serializedVersion: 2
     m_Bits: 128
+  GroundLayer:
+    serializedVersion: 2
+    m_Bits: 64
 --- !u!114 &245433798
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -192,9 +196,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 53e2006d07e934d47893f128ecc75c85, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  baseLayer:
-    serializedVersion: 2
-    m_Bits: 6144
   statController: {fileID: 245433796}
   stateMachine: {fileID: 254677980213501280}
   agent: {fileID: 1311093997016646484}
@@ -250,8 +251,22 @@ MonoBehaviour:
     attackSpeed: 0
     damage: 0
     sightRange: 0
-    HealthRegen: 0
-    EnergyRegen: 0
+    healthRegen: 0
+    energyRegen: 0
+--- !u!136 &1668943034463940921
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 254677980213501294}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  m_Radius: 1.4619206
+  m_Height: 7.2875175
+  m_Direction: 1
+  m_Center: {x: -0.056043714, y: 3.1437569, z: 0}
 --- !u!1 &961105019416420985
 GameObject:
   m_ObjectHideFlags: 0

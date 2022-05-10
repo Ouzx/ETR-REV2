@@ -9,7 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3576230698909900042}
-  - component: {fileID: 7712762363358612920}
   m_Layer: 0
   m_Name: Eatable
   m_TagString: Eatable
@@ -34,19 +33,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!135 &7712762363358612920
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2704033379161233408}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 1.1295648
-  m_Center: {x: -1.0253587, y: -10.558554, z: -136.2099}
 --- !u!1001 &3759247313034037911
 PrefabInstance:
   m_ObjectHideFlags: 0

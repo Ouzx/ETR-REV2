@@ -23,10 +23,9 @@ public class StateMachine : MonoBehaviour
 
         animator.SetBool(state.ToString(), false);
         state = _state;
-        Invoke(nameof(doAnimation), .2f);
-        
+        animator.SetBool(state.ToString(), true);
+
     }
-    void doAnimation() => animator.SetBool(state.ToString(), true);
     public State GetState() => state;
     
 }

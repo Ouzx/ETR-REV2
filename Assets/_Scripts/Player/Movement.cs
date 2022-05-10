@@ -1,7 +1,6 @@
 // Oz
 using UnityEngine;
 using UnityEngine.AI;
-using System;
 public class Movement : MonoBehaviour
 {
     /*
@@ -14,15 +13,14 @@ public class Movement : MonoBehaviour
         Base,
         Wilderness
     }
+    private Locations location;
 
-    [SerializeField] private LayerMask baseLayer;
     [SerializeField] private StatController statController;
     [SerializeField] private StateMachine stateMachine;
     [SerializeField] private NavMeshAgent agent;
     [SerializeField] private Player player;
 
     private Vector3 startPosition;
-    private Vector3 targetPoint;
 
     private void Start()
     {
@@ -31,28 +29,27 @@ public class Movement : MonoBehaviour
 
     public bool Walk(Vector3 point)
     {
-        agent.acceleration = player.stats.GetSpeed(); // TODO: SPEED OR ACCELERATION?
-
-        if (IsArrived(point)) return true;
-        StepCheck();
-        if (point != targetPoint)   
+        agent.stoppingDistance = player.stats.GetAttackRange();
+        agent.speed = player.stats.GetSpeed(); // TODO: SPEED OR ACCELERATION?
+        //agent.SetDestination(point);
+        if (point != null)
         {
-            targetPoint = point;
-
-            //Look(point);
+            GameManager.instance.Print(player.name, " is walking to " + point);
+            StepCheck();
             stateMachine.SetState(StateMachine.State.Walk);
             agent.SetDestination(point);
         }
+
+        if (IsArrived())
+        {
+            GameManager.instance.Print(player.name, " is at position:  " + point);
+            //stateMachine.SetState(StateMachine.State.Idle);
+            return true;
+        }
+        
         return false;
     }
     
-    //private void Look(Vector3 target)
-    //{
-    //    Vector3 directon = (target - transform.position).normalized;
-    //    Quaternion lookRotation = Quaternion.LookRotation(new Vector3(directon.x, 0f, directon.z));
-    //    transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 50f);
-    //}
-
     private void StepCheck()
     {
         if (startPosition == new Vector3()) startPosition = transform.position;
@@ -64,16 +61,29 @@ public class Movement : MonoBehaviour
             startPosition = transform.position;
         }
     }
-
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.tag.Equals("Fred Base") && player.playerType == Player.PlayerType.Player)
+        {
+            location = Locations.Base;
+        }
+        else if (other.tag.Equals("Barney Base") && player.playerType == Player.PlayerType.Bot)
+        {
+            location = Locations.Base;
+        }
+    }
     public Locations WhereAmI()
     {
-        bool isBase = Physics.CheckSphere(transform.position, 0.5f, baseLayer);
-        if (isBase)
-            return Locations.Base;
-        else
-            return Locations.Wilderness;
+        GameManager.instance.Print(player.name, " is at location: " + location);
+        return location;
     }
 
-    public bool IsArrived(Vector3 point) => GetDistance(point) < .5f;
+    public bool IsArrived()
+    {
+        float dist = agent.remainingDistance;
+        return (dist != Mathf.Infinity && agent.pathStatus == NavMeshPathStatus.PathComplete && agent.remainingDistance <= player.stats.GetAttackRange());
+
+    }
+
     private float GetDistance(Vector3 point) => Vector3.Distance(transform.position, point);
 }

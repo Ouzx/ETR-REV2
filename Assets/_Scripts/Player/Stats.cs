@@ -73,7 +73,7 @@ public class Stats : MonoBehaviour
 
     #region Hungerness
     private float hungerness;
-    private bool isHungry;
+    private bool isHungry = true;
 
     public float GetHungerness() => hungerness;
     public float GetHungerCost() => player.HungerCost;
@@ -107,11 +107,21 @@ public class Stats : MonoBehaviour
     #endregion
 
     #region Range
-    private float attackRange;
+    private float attackRange = 3f;
 
     public float GetSightRange() => player.SightRange;
     public float GetAttackRange() => attackRange;
 
     #endregion
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.black;
+        //UnityEditor.Handles.DrawWireDisc(transform.position, transform.up, GetSightRange());
+        Gizmos.DrawWireSphere(transform.position, GetSightRange());
+        Gizmos.color = Color.red;
+        //UnityEditor.Handles.DrawWireDisc(transform.position, transform.up, GetAttackRange());
+        Gizmos.DrawWireSphere(transform.position, GetAttackRange());
+    }
 
 }

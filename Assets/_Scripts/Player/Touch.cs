@@ -24,7 +24,7 @@ public class Touch : MonoBehaviour
 
     public void AttackEnemy(Interactable interactable)
     {
-        
+        GameManager.instance.Print(player.name, "I'm attacking " + interactable.transform.name);
         if (!isInteracted)
         {
             stateMachine.SetState(StateMachine.State.Attack);
@@ -37,6 +37,7 @@ public class Touch : MonoBehaviour
 
     public void Bite(Interactable interactable)
     {
+        GameManager.instance.Print(player.name, "I'm biting " + interactable.transform.name);
         if (!isInteracted)
         {
             stateMachine.SetState(StateMachine.State.Eat);
